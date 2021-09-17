@@ -81,11 +81,31 @@ class Stationdetails extends React.PureComponent {
     }
 
     render() {
-        const { id } = this.props.match.params;
+        const { id, name } = this.props.match.params;
         let last_load = new Date(localStorage.getItem(`lastupdate:station:${id}`));
         if (last_load.toString() === "Thu Jan 01 1970 01:00:00 GMT+0100 (Mitteleuropäische Normalzeit)") {
             last_load = new Date();
         }
+
+        function Header(props) {
+            let last_load = props.last_load;
+            return (
+                <div>
+                    <a class="anchor" href="/#" name="#top">
+                        Top
+                    </a>
+                    <table className={stationlist.maintable}>
+                        <tr>
+                            <td>
+                                <h1>{name}</h1>
+                            </td>
+                        </tr>
+                    </table>
+                    <center><p>Stand: {`${last_load.getHours()}:${last_load.getMinutes()}`}</p></center>
+                </div>
+            );
+        }
+
         return (
             <div>
                 <a class="anchor" href="/#" name="#top">
@@ -94,8 +114,8 @@ class Stationdetails extends React.PureComponent {
                 <NavLink exact to="/" activeClassName="selected">
                     <center><button className={button.button}>Zurück</button></center>
                 </NavLink>
+                <Header last_load={last_load} />
                 <div>
-                    <center><p>Stand: {`${last_load.getHours()}:${last_load.getMinutes()}`}</p></center>
                     <table classname={stationlist.pricetable}>
                         <tr>
                             <td>Kraftstoff</td>
@@ -103,13 +123,23 @@ class Stationdetails extends React.PureComponent {
                             <td>Preisänderung</td>
                         </tr>
                         {
-                            this.state.data.map((price) => {
-                                let time = new Date(new Date(price.price.valid_from).toString() + " UTC");
+                            this.state.data.map((remote_price) => {
+                                let time = new Date(new Date(remote_price.price.valid_from).toString() + " UTC");
+                                let last_update = `${time.getHours()}:${time.getMinutes()}`;
+                                let price;
+                                let name = remote_price.name;
+                                console.log(remote_price.price.price)
+                                if (remote_price.price.price != undefined) {
+                                    price = `${(remote_price.price.price/100).toFixed(2)} €`;
+                                } else {
+                                    price = `kein Angebot`;
+                                    last_update = `-`;
+                                }
                                 return (
                                     <tr>
-                                        <td>{price.name}</td>
-                                        <td>{`${(price.price.price/100).toFixed(2)} €`}</td>
-                                        <td>{`${time.getHours()}:${time.getMinutes()}`}</td>
+                                        <td>{name}</td>
+                                        <td>{price}</td>
+                                        <td>{last_update}</td>
                                     </tr>
                                 )
                             })
@@ -117,8 +147,7 @@ class Stationdetails extends React.PureComponent {
                     </table>
                 </div>
                 <div className={stationlist.note}>
-                    {config.website.author} {new Date().getFullYear()} |{" "}
-                    {parse(config.website.footer_text)} <br />{" "}
+                    {config.website.author} {new Date().getFullYear()} <br />
                     <NavLink exact to="/privacy" activeClassName="selected">
                         <a>Datenschutzbestimmungen</a>
                     </NavLink>

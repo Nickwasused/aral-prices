@@ -1,6 +1,6 @@
 import React from "react";
 import parse from "html-react-parser";
-import stationslist from "../css/stationslist.module.css";
+import stationlist from "../css/stationslist.module.css";
 import { NavLink } from "react-router-dom";
 import { config } from "../config";
 import { stations } from "../data/stations";
@@ -39,12 +39,7 @@ class Gasstations extends React.PureComponent {
                     <a class="anchor" href="/#" name="#top">
                         Top
                     </a>
-                    <NavLink exact to="/settings" activeClassName="selected">
-                        <div class="settingsicon">
-                            <i class="fa fa-cog"></i>
-                        </div>
-                    </NavLink>
-                    <table className={stationslist.maintable}>
+                    <table className={stationlist.maintable}>
                         <tr>
                             <td>
                                 <h1>Tankstellen: {stations}</h1>
@@ -75,17 +70,17 @@ class Gasstations extends React.PureComponent {
                         stations={filteredstations.length}
                     />
                     <br />
-                        <div className={stationslist.searchcombo}>
+                        <div className={stationlist.searchcombo}>
                             <input
                                 type="text"
                                 placeholder="Tankstelle"
                                 value={this.state.inputValue}
                                 onChange={this.FilterOnChange}
                             />
-                            <span classname={stationslist.searchcombobutton}><i class="fa fa-search"></i></span>
+                            <span classname={stationlist.searchcombobutton}><i class="fa fa-search"></i></span>
                         </div>
                 </div>
-                <ul className={stationslist.stationlist}>
+                <ul className={stationlist.stationlist}>
                     {filteredstations.map((station) => {
                         const {
                             id,
@@ -93,7 +88,7 @@ class Gasstations extends React.PureComponent {
                         } = station;
 
                         return (
-                            <li className={stationslist.item} key={id}>
+                            <li className={stationlist.item} key={id}>
                                 <NavLink
                                     exact
                                     to={
@@ -110,9 +105,8 @@ class Gasstations extends React.PureComponent {
                         );
                     })}
                 </ul>
-                <div className={stationslist.note}>
-                    {config.website.author} {new Date().getFullYear()} |{" "}
-                    {parse(config.website.footer_text)} <br />{" "}
+                <div className={stationlist.note}>
+                    {config.website.author} {new Date().getFullYear()} <br />
                     <NavLink exact to="/privacy" activeClassName="selected">
                         <a>Datenschutzbestimmungen</a>
                     </NavLink>

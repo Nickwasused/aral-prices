@@ -108,7 +108,7 @@ class Stationdetails extends React.PureComponent {
                                 return (
                                     <tr>
                                         <td>{price.name}</td>
-                                        <td>{parse(price.price.display_price)}</td>
+                                        <td>{`${(price.price.price/100).toFixed(2)} €`}</td>
                                         <td>{`${time.getHours()}:${time.getMinutes()}`}</td>
                                     </tr>
                                 )

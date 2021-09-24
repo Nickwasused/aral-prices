@@ -1,13 +1,11 @@
 import React from "react";
-import parse from "html-react-parser";
 import stationlist from "../css/stationslist.module.css";
 import { get } from "axios";
 import button from "../css/button.module.css";
 import { isafternow } from "../js/time.js";
 import { config } from "../config";
 import { NavLink } from "react-router-dom";
-import { instanceOf } from "prop-types";
-import { withCookies, Cookies } from "react-cookie";
+import { station_types } from "../data/station_types";
 
 class Stationdetails extends React.PureComponent {
     constructor(props) {
@@ -15,25 +13,40 @@ class Stationdetails extends React.PureComponent {
     }
 
     state = {
-        data: []
+        type: 0,
+        remotedata: []
     };
 
     async writeData() {
-        const { id } = this.props.match.params;
-        let temprequest = await Promise.all([
+        const { id, stationtype } = this.props.match.params;
+        let station_data = station_types.stations[stationtype];
+        await Promise.all([
             get(
-                `https://api.tankstelle.aral.de/api/v2/stations/${id}/prices`,
+                station_data.url.replace("{id}", id),
                 {
                     headers: {
-                        "Host": "api.tankstelle.aral.de",
-                        "Origin": "https://tankstelle.aral.de"
+                        "Host": station_data.headers.Host,
+                        "Origin": station_data.headers.Origin
                     },
                 }
             ).then(response => {
+                let datatoset = {};
+                if (stationtype == 0) {
+                    datatoset = response.data.data;
+                } else if (stationtype == 1) {
+                    datatoset = response.data.response.people;
+                }
+                console.log(stationtype)
                 this.setState({
-                    data: response.data.data
+                    "type": stationtype,
+                    "remotedata": datatoset
                 });
-                localStorage.setItem(`station:data:${id}`, JSON.stringify(response.data.data));
+                localStorage.setItem(`station:data:${id}`, JSON.stringify(
+                    {
+                        "type": stationtype,
+                        "remotedata": datatoset
+                    }
+                ));
             })
         ]);
         
@@ -50,7 +63,8 @@ class Stationdetails extends React.PureComponent {
     loaddata() {
         const { id } = this.props.match.params;
         this.setState({
-            data: JSON.parse(localStorage.getItem(`station:data:${id}`))
+            type: JSON.parse(localStorage.getItem(`station:data:${id}`)).type,
+            remotedata: JSON.parse(localStorage.getItem(`station:data:${id}`)).remotedata
         });
     }
 
@@ -123,16 +137,34 @@ class Stationdetails extends React.PureComponent {
                             <td>Preisänderung</td>
                         </tr>
                         {
-                            this.state.data.map((remote_price) => {
-                                let time = new Date(new Date(remote_price.price.valid_from).toString() + " UTC");
-                                let last_update = `${time.getHours()}:${time.getMinutes()}`;
+                            
+                            this.state.remotedata.map((remote_price) => {
+                                console.log(remote_price)
+                                let type = this.state.type;
                                 let price;
-                                let name = remote_price.name;
-                                console.log(remote_price.price.price)
-                                if (remote_price.price.price != undefined) {
-                                    price = `${(remote_price.price.price/100).toFixed(2)} €`;
-                                } else {
-                                    price = `kein Angebot`;
+                                let last_update;
+                                let name;
+                                if (type == 0) {
+                                    // Aral
+                                    let time = new Date(new Date(remote_price.price.valid_from).toString() + " UTC");
+                                    last_update = `${time.getHours()}:${time.getMinutes()}`;
+                                    name = remote_price.name;
+                                    if (remote_price.price.price != undefined) {
+                                        price = `${(remote_price.price.price/100).toFixed(2)} €`;
+                                    } else {
+                                        price = `kein Angebot`;
+                                        last_update = `-`;
+                                    }
+                                } else if (type == 1) {
+                                    // Star
+                                    if (remote_price.listName == "PÄCHTER" | remote_price.identifier.includes("LetzteAktualisierung_")) {
+                                        return (
+                                            <div></div>
+                                        )
+                                    }
+                                    let remove_branding = remote_price.identifier.match(new RegExp(/_STAR[0-9]{1,}/g)); 
+                                    name = remote_price.identifier.replace(remove_branding, "");
+                                    price = remote_price.name;
                                     last_update = `-`;
                                 }
                                 return (

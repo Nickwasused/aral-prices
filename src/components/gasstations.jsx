@@ -1,9 +1,9 @@
 import React from "react";
-import parse from "html-react-parser";
 import stationlist from "../css/stationslist.module.css";
 import { NavLink } from "react-router-dom";
 import { config } from "../config";
 import { stations } from "../data/stations";
+import { station_types } from "../data/station_types";
 
 class Gasstations extends React.PureComponent {
     constructor(props) {
@@ -84,6 +84,7 @@ class Gasstations extends React.PureComponent {
                     {filteredstations.map((station) => {
                         const {
                             id,
+                            type,
                             name
                         } = station;
 
@@ -95,11 +96,13 @@ class Gasstations extends React.PureComponent {
                                         "/station/" +
                                         id +
                                         "/" +
-                                        name
+                                        name +
+                                        "/" +
+                                        type
                                     }
                                     activeClassName="selected"
                                 >
-                                {name}
+                                {`${station_types.stations[type].name}: ${name}`}
                                 </NavLink>
                             </li>
                         );

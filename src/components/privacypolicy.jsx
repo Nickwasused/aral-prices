@@ -14,7 +14,7 @@ class Privacy extends React.PureComponent {
             <div class="privacy">
                 <h1>Datenschutzbestimmungen für Nickwasused</h1>
 
-                <p>Bei der Tankliste, erreichbar unter https://aral.nickwasused.eu/, ist eine unserer Hauptprioritäten der Schutz der Privatsphäre unserer Besucher. Dieses Dokument zum Datenschutz enthält die Arten von Informationen, die von LuckyV Streamer Liste gesammelt und aufgezeichnet werden, und wie wir sie verwenden.</p>
+                <p>Bei der Tankliste, erreichbar unter https://tanken.nickwasused.eu/, ist eine unserer Hauptprioritäten der Schutz der Privatsphäre unserer Besucher. Dieses Dokument zum Datenschutz enthält die Arten von Informationen, die von LuckyV Streamer Liste gesammelt und aufgezeichnet werden, und wie wir sie verwenden.</p>
 
                 <p>Wenn Sie weitere Fragen haben oder mehr Informationen über unsere Datenschutzrichtlinie benötigen, zögern Sie nicht, uns zu kontaktieren.</p>
 

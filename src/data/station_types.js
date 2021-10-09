@@ -3,20 +3,12 @@ export const station_types = {
         {
             "id": 0,
             "name": "Aral",
-            "url": "https://api.tankstelle.aral.de/api/v2/stations/{id}/prices",
-            "headers": {
-                "Host": "api.tankstelle.aral.de",
-                "Origin": "https://tankstelle.aral.de"
-            }
+            "url": "https://tanken-api.nickwasused.eu/api/get/aral?id={id}"
         },
         {
             "id": 1,
             "name": "Star",
-            "url": "https://uberall.com/api/storefinders/fh6bkacXrYxFxK28kbylc8jdborIlY/locations/{id}?v=20210824&language=de&full=true",
-            "headers": {
-                "Host": "uberall.com",
-                "Origin": "https://www.star.de"
-            }
+            "url": "https://tanken-api.nickwasused.eu/api/get/star?id={id}"
         }
     ]
 }

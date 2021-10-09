@@ -22,13 +22,7 @@ class Stationdetails extends React.PureComponent {
         let station_data = station_types.stations[stationtype];
         await Promise.all([
             get(
-                station_data.url.replace("{id}", id),
-                {
-                    headers: {
-                        "Host": station_data.headers.Host,
-                        "Origin": station_data.headers.Origin
-                    },
-                }
+                station_data.url.replace("{id}", id)
             ).then(response => {
                 let datatoset = {};
                 if (stationtype == 0) {

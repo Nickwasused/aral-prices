@@ -131,12 +131,11 @@ class Stationdetails extends React.PureComponent {
                             <td>Preisänderung</td>
                         </tr>
                         {
-                            
                             this.state.remotedata.map((remote_price) => {
-                                console.log(remote_price)
+                                console.log(this.state.remotedata)
                                 let type = this.state.type;
-                                let price;
                                 let last_update;
+                                let price;
                                 let name;
                                 if (type == 0) {
                                     // Aral
@@ -144,7 +143,7 @@ class Stationdetails extends React.PureComponent {
                                     last_update = `${time.getHours()}:${time.getMinutes()}`;
                                     name = remote_price.name;
                                     if (remote_price.price.price != undefined) {
-                                        price = `${(remote_price.price.price/100).toFixed(2)} €`;
+                                        price = (remote_price.price.price/100).toFixed(2);
                                     } else {
                                         price = `kein Angebot`;
                                         last_update = `-`;
@@ -156,16 +155,23 @@ class Stationdetails extends React.PureComponent {
                                             <div></div>
                                         )
                                     }
+                                    let tempupdate;
+                                    this.state.remotedata.map((remote_price) => {
+                                        if (remote_price.identifier.includes("LetzteAktualisierung_"))
+                                        tempupdate = remote_price.name;
+                                    });
+                                    let datefix = tempupdate.match(new RegExp(/Preisangabe zuletzt aktualisiert am [0-9]{1,}.[0-9]{1,}.[0-9]{1,}. um /gm)); 
+                                    last_update = tempupdate.replace(datefix, "").replace(" Uhr", "");
                                     let remove_branding = remote_price.identifier.match(new RegExp(/_STAR[0-9]{1,}/g)); 
                                     name = remote_price.identifier.replace(remove_branding, "");
-                                    price = remote_price.name;
-                                    last_update = `-`;
+                                    //price = remote_price.name;
+                                    price = parseFloat(remote_price.name.replace("€", "").replace(",", ".")).toFixed(2)
                                 }
                                 return (
                                     <tr>
                                         <td>{name}</td>
-                                        <td>{price}</td>
-                                        <td>{last_update}</td>
+                                        <td>{price} €</td>
+                                        <td>{last_update} Uhr</td>
                                     </tr>
                                 )
                             })

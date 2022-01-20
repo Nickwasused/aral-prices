@@ -86,6 +86,15 @@ class Stationdetails extends React.PureComponent {
 
     componentDidMount() {
         this.getData();
+        // fetch data every 10 minuets
+        this.interval = setInterval(
+            this.getData.bind(this),
+            10 * 1000 * 60
+        );
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
     }
 
     render() {

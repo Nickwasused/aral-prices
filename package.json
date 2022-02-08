@@ -18,11 +18,13 @@
     "react-router-dom": "^5.2.1"
   },
   "devDependencies": {
+    "javascript-obfuscator": "latest",
     "react-scripts": "4.0.3"
   },
   "scripts": {
+    "obfuscate": "javascript-obfuscator ./build --output ./build --dead-code-injection true --disable-console-output true --rename-globals true --self-defending true --debug-protection true -- splitStrings true --splitStringsChunkLength 4",
     "start": "react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "build": "react-scripts build && npm run obfuscate",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

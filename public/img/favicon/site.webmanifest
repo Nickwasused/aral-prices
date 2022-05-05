@@ -40,7 +40,7 @@
     ],
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
-    "start_url": "https://nickwasused.de",
+    "start_url": "https://tanken.nickwasused.com",
     "display": "standalone",
     "orientation": "portrait"
 }

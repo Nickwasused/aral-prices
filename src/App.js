@@ -4,12 +4,11 @@ import {
   Route
 } from 'react-router-dom';
 import React, { Suspense, lazy } from "react";
+import './registerServiceWorker';
 
 const Gasstations = lazy(() => import('./components/gasstations'));
 const Gasstation = lazy(() => import('./components/gasstation'));
 const Privacy = lazy(() => import('./components/privacypolicy'));
-
-import './registerServiceWorker';
 
 function App() {
   return (

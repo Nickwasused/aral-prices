@@ -15,7 +15,8 @@
     "react-css-modules": "^4.7.11",
     "react-dom": "^17.0.2",
     "react-numeric-input": "^2.2.3",
-    "react-router-dom": "^5.2.1"
+    "react-router-dom": "^5.2.1",
+    "workbox-cli": "^6.5.3"
   },
   "devDependencies": {
     "javascript-obfuscator": "latest",
@@ -24,7 +25,7 @@
   "scripts": {
     "obfuscate": "javascript-obfuscator ./build --output ./build --dead-code-injection true --disable-console-output true --rename-globals true --self-defending true --debug-protection true -- splitStrings true --splitStringsChunkLength 4",
     "start": "react-scripts start",
-    "build": "react-scripts build && npm run obfuscate",
+    "build": "react-scripts build && npm run obfuscate && workbox generateSW workbox-config.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

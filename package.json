@@ -17,12 +17,11 @@
     "react-numeric-input": "^2.2.3",
     "react-router-dom": "^5.2.1",
     "register-service-worker": "^1.7.2",
-    "workbox-cli": "^6.5.3"
-  },
-  "devDependencies": {
+    "workbox-cli": "^6.5.3",
     "javascript-obfuscator": "latest",
     "react-scripts": "^4.0.3"
   },
+  "devDependencies": {},
   "scripts": {
     "obfuscate": "javascript-obfuscator ./build --output ./build --dead-code-injection true --disable-console-output true --rename-globals true --self-defending true --debug-protection true -- splitStrings true --splitStringsChunkLength 4",
     "start": "react-scripts --openssl-legacy-provider start",

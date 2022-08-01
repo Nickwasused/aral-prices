@@ -29,7 +29,7 @@ export default {
         async get_station_data() {
             const api_data = await (
                 await fetch(
-                    `https://tanken-api.nickwasused.com/api/get/aral?id=${this.station_id}`
+                    `/api/${this.station_id}`
                 )
             ).json()
             this.station_stats = api_data.data

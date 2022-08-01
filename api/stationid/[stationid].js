@@ -7,7 +7,7 @@ export default async function handler(request, response) {
         const res = await fetch(
             `https://api.tankstelle.aral.de/api/v2/stations/${stationid}/prices`,
         )
-        data = await res.json().data
+        data = await res.json()
     } catch (e) {
         console.error(e)
     }
@@ -16,5 +16,5 @@ export default async function handler(request, response) {
     response.setHeader("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS")
     response.setHeader("Content-Type", "application/json")
     response.setHeader("Cache-Control", "s-maxage=290")
-    return response.status(200).json(data)
+    return response.status(200).json(data["data"])
 }

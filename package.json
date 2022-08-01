@@ -5,12 +5,17 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview --port 4173",
-    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .eslintignore",
+    "pwa": "npm run build && npx http-server dist"
   },
   "dependencies": {
     "sass": "^1.54.0",
+    "vite-plugin-pwa": "^0.12.3",
     "vue": "^3.2.37",
-    "vue-router": "^4.1.2"
+    "vue-router": "^4.1.2",
+    "workbox-build": "^6.5.4",
+    "workbox-cli": "^6.5.4",
+    "workbox-window": "^6.5.4"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.1.0",

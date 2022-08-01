@@ -7,7 +7,7 @@ export default async function handler(request, response) {
         const res = await fetch(
             `https://api.tankstelle.aral.de/api/v2/stations/${stationid}/prices`,
         )
-        data = await res.json()
+        data = await res.json().data
     } catch (e) {
         console.error(e)
     }

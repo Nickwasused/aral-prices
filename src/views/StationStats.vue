@@ -10,6 +10,8 @@ export default {
             station_id: 0,
             station_data: {},
             station_stats: [],
+            timer: null,
+            last_update: new Date()
         }
     },
     created() {
@@ -31,7 +33,18 @@ export default {
                 )
             ).json()
             this.station_stats = api_data.data
+            this.last_update = new Date()
         },
+    },
+    mounted: function () {
+        if (this.timer == null) {
+            this.timer = setInterval(() => {
+                this.get_station_data()
+            }, 1000 * 60 * 5)
+        }
+    },
+    unmounted() {
+        clearInterval(this.timer)
     },
 }
 </script>
@@ -42,6 +55,7 @@ export default {
         <tr>
             <td>
                 <h1>{{ this.station_data.name }}</h1>
+                <h3>{{ this.last_update.toLocaleTimeString() }}</h3>
             </td>
         </tr>
     </table>

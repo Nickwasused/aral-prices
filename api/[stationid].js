@@ -5,7 +5,7 @@ export default async function handler(request, response) {
     const { stationid } = request.query;
     try {
         const res = await fetch(
-            `https://tanken-api.nickwasused.com/api/get/aral?id=${stationid}`,
+            `https://api.tankstelle.aral.de/api/v2/stations/${stationid}/prices${stationid}`,
         )
         data = await res.json()
     } catch (e) {

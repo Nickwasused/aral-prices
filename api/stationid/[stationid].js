@@ -1,5 +1,9 @@
 import fetch from "node-fetch"
 
+export const config = {
+    runtime: 'experimental-edge',
+};  
+
 export default async function handler(request, response) {
     let data = {}
     const { stationid } = request.query;

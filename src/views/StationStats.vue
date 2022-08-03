@@ -29,7 +29,7 @@ export default {
         async get_station_data() {
             const api_data = await (
                 await fetch(
-                    `/api/stationid/${this.station_id}`
+                    `/api/stationid/?stationid=${this.station_id}`
                 )
             ).json()
             this.station_stats = api_data

@@ -5,8 +5,6 @@
     "main": "[stationid].js",
     "author": "Nickwasused",
     "license": "MPL-2.0",
-    "dependencies": {
-        "node-fetch": ">=2.6.7"
-    },
+    "dependencies": {},
     "type": "module"
 }

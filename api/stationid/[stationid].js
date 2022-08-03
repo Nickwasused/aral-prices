@@ -3,6 +3,7 @@ export const config = {
 };  
 
 export default async function handler(request, response) {
+    console.log(request)
     let data = {}
     const { stationid } = request.query;
     try {

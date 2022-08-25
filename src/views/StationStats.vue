@@ -11,7 +11,7 @@ export default {
             station_data: {},
             station_stats: [],
             timer: null,
-            last_update: new Date()
+            last_update: new Date(),
         }
     },
     created() {
@@ -29,10 +29,10 @@ export default {
         async get_station_data() {
             const api_data = await (
                 await fetch(
-                    `/api/stationid/${this.station_id}`
+                    `https://api.tankstelle.aral.de/api/v2/stations/${this.station_id}/prices`
                 )
             ).json()
-            this.station_stats = api_data
+            this.station_stats = api_data["data"]
             this.last_update = new Date()
         },
     },
@@ -49,7 +49,7 @@ export default {
 }
 </script>
 
-<template>
+<template v-once>
     <div class="wrapper"><RouterLink to="/">Zurück</RouterLink></div>
     <table class="station_count">
         <tr>
@@ -61,21 +61,34 @@ export default {
     </table>
     <table>
         <tr>
+            <td>Icon</td>
             <td>Kraftstoff</td>
             <td>Preis in Euro</td>
             <td>Preisänderung</td>
         </tr>
-        <tr v-for="price in this.station_stats" v-bind:id="price.aral_id">
-            <td>{{ price.name }}</td>
-            <td>{{ parseFloat(price.price.price / 100).toFixed(2) }} €</td>
-            <td>
+        <tr v-for="fuel in this.station_stats" :key="fuel.id">
+            <td v-if="!fuel.price.error">
+                <img
+                    :src="
+                        'https://external-content.duckduckgo.com/iu/?u=https://api.tankstelle.aral.de' +
+                        fuel.icon
+                    "
+                />
+            </td>
+            <td v-if="!fuel.price.error">
+                {{ fuel.name }}
+            </td>
+            <td v-if="!fuel.price.error">
+                {{ parseFloat(fuel.price.price / 100).toFixed(2) }} €
+            </td>
+            <td v-if="!fuel.price.error">
                 {{
                     new Date(
-                        new Date(price.price.valid_from).toString() + " UTC"
+                        new Date(fuel.price.valid_from).toString() + " UTC"
                     ).getHours() +
                     ":" +
                     new Date(
-                        new Date(price.price.valid_from).toString() + " UTC"
+                        new Date(fuel.price.valid_from).toString() + " UTC"
                     ).getMinutes() +
                     " Uhr"
                 }}

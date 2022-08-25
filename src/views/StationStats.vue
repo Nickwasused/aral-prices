@@ -59,7 +59,7 @@ export default {
             </td>
         </tr>
     </table>
-    <table>
+    <table class="stationstats">
         <tr>
             <td>Icon</td>
             <td>Kraftstoff</td>

@@ -49,18 +49,18 @@ export default {
 }
 </script>
 
-<template v-once>
+<template>
     <div class="wrapper"><RouterLink to="/">Zurück</RouterLink></div>
     <table class="station_count">
         <tr>
             <td>
-                <h1>{{ this.station_data.name }}</h1>
+                <h1 v-once>{{ this.station_data.name }}</h1>
                 <h3>{{ this.last_update.toLocaleTimeString() }}</h3>
             </td>
         </tr>
     </table>
     <table class="stationstats">
-        <tr>
+        <tr v-once>
             <td>Icon</td>
             <td>Kraftstoff</td>
             <td>Preis in Euro</td>

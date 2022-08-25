@@ -15,7 +15,7 @@ export default {
 }
 </script>
 
-<template>
+<template v-once>
     <table class="station_count">
         <tr>
             <td>
@@ -25,7 +25,7 @@ export default {
     </table>
     <ul class="stationlist">
         <RouterLink
-            v-bind:id="station.id"
+            :key="station.id"
             :to="'/station/' + station.id"
             v-for="station in this.stations"
             ><li>{{ station.name }}</li></RouterLink

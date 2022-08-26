@@ -1,12 +1,14 @@
+@charset "utf-8";
+
 .station_name {
     margin-bottom: 1%;
     margin-top: 1%;
     text-align: center;
-  
-    &h1 {
-      margin-bottom: 0px;
-      font-size: 3.5rem;
-    }
+}
+
+.station_name h1 {
+    margin-bottom: 0px;
+    font-size: 3.5rem;
 }
 
 td img {
@@ -39,9 +41,9 @@ a {
     cursor: pointer;
     background-color: #929292;
     transition: all 0.2s linear;
+}
 
-    &:hover {
-        color: white;
-        background-color: black;
-    }
+a:hover {
+    color: white;
+    background-color: black;
 }

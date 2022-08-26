@@ -2,7 +2,7 @@
 import { h } from "preact";
 import { Handlers, PageProps } from "$fresh/server.ts";
 import Layout from "../components/layout.tsx";
-// import stations from '../stations.json' assert { type: "json" };
+import stations from '../stations.json' assert { type: "json" };
 
 interface Stats {
   id: number;
@@ -24,6 +24,15 @@ export const handler: Handlers<Stats | null> = {
   },
 };
 
+function get_name(stationid: number) {
+  const fstations = stations.filter((station) => {
+    if (parseInt(station.id) == stationid) {
+      return station;
+    }
+  });
+  return fstations[0].name
+}
+
 export default function StationStats(props: PageProps) {
   if (!props.data) {
     return <h1>Station not found!</h1>
@@ -32,6 +41,13 @@ export default function StationStats(props: PageProps) {
   return (
     <Layout>
       <div class="wrapper"><a href="/">Zurück</a></div>
+      <table class="station_count">
+        <tr>
+            <td>
+              <h1>{ get_name(parseInt(props.params.stationid)) }</h1>
+            </td>
+        </tr>
+      </table>
       <table class="stationstats">
           <tr v-once>
               <td>Icon</td>

@@ -8,3 +8,7 @@ deno task start
 ```
 
 This will watch the project directory and restart as necessary.
+
+# Station Data
+
+Using the Station data from here: https://github.com/Nickwasused/aral-station-data

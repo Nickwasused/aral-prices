@@ -1,0 +1,115 @@
+@charset "utf-8";
+
+html {
+    font-size: 20px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    word-wrap: break-word;
+    background-color: #343a40;
+    color: white;
+    text-justify: inter-word;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+table p {
+    font-size: 1.5rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+body {
+    margin: 0;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+.fa-circle {
+    color: red;
+}
+
+.fa-circle:hover {
+    color: red;
+}
+
+a:hover {
+    color: #fcd401;
+}
+
+.head {
+    text-align: center;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+table {
+    margin: 0 auto;
+    width: 75%;
+    border-collapse: collapse;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+th,
+td {
+    padding: 12px 15px;
+}
+
+tr:nth-of-type(even) {
+    background-color: rgb(65, 65, 65);
+}
+
+input[type="text"] {
+    width: 100%;
+    padding: 1%;
+}
+
+.wrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrapper a {
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    background-color: #929292;
+    transition: all 0.2s linear;
+}
+
+.wrapper a:hover {
+    color: white;
+    background-color: black;
+}
+
+.header_table {
+    margin-bottom: .5%;
+    margin-top: .5%;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .header_table {
+        width: 99%;
+    }
+}

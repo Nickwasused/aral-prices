@@ -1,0 +1,29 @@
+@charset "utf-8";
+
+.station_name {
+    margin-bottom: 1%;
+    margin-top: 1%;
+    text-align: center;
+}
+
+.station_name h1 {
+    margin-bottom: 0px;
+    font-size: 3.5rem;
+}
+
+td img {
+    display: inline;
+    width: 2em;
+}
+
+@media (max-width: 600px) {
+    .stationstats {
+        width: 99%;
+    }
+}
+
+@media (max-width: 440px) {
+    .stationstats td:nth-of-type(1) {
+        display: none;
+    }
+}

@@ -9,7 +9,7 @@ GET(req, ctx) {
   const url = new URL(req.url);
   const facilities: string[] = url.searchParams.getAll("facilities");
   const fuel: string[] = url.searchParams.getAll("fuel");
-  let query: string = url.searchParams.get("q") || "";
+  let query: string = url.searchParams.get("query") || "";
   query = query.toLocaleLowerCase()
   let results: stationdata[] = [];
 
@@ -56,7 +56,7 @@ export default function Home({ data }: PageProps<Data>) {
           <tr>
             <td>
             <form>
-              <input type="text" name="q" placeholder="Stadt, Postleitzahl, Name, Straße" value={query ? query:""}></input>
+              <input type="text" name="query" placeholder="Stadt, Postleitzahl, Name, Straße" value={query ? query:""}></input>
               {
                 ger_fuel.map((element: string) => (
                   <span>

@@ -13,6 +13,31 @@ interface Stats {
   price: any;
 }
 
+const ger_facilities = {
+  "open_24_hours": "24 Stunden geöffnet",
+  "car_wash": "Waschanlage",
+  "jet_wash": "JetWash",
+  "super_wash": "SuperWash",
+  "recup": "RECUP - Pfandbecher",
+  "shop": "Aral Store",
+  "bistro": "PetitBistro",
+  "pay_at_pump_supported": "Bezahlen an der Zapfsäule",
+  "outdoor_payment_terminal": "Outdoor-Zahlungsterminal",
+  "loyalty": "PAYBACK & Aral FuelCard",
+  "special_car_wash": "Spezielle Waschanlage",
+  "vda": "VDA Konform Siegel",
+  "open_saturday": "Samstags geöffnet",
+  "open_sunday": "Sonntags geöffnet",
+  "rewe_to_go": "Rewe to Go",
+  "too_good_to_go": "Too Good To Go",
+  "super_boxes": "SB Waschplätze",
+  "cash_point": "Geldautomat",
+  "electric_charging": "Ladesäulen",
+  "truck_parking": "Autohof",
+  "motorway_site": "Autobahnnah",
+  "truck_wash": "Truck Wash"
+}
+
 export const handler: Handlers<Stats | null> = {
   async GET(_req, ctx) {
     const { stationid } = ctx.params;
@@ -56,11 +81,6 @@ export default function StationStats(props: PageProps) {
               <h1>{ station.city }</h1>
             </td>
         </tr>
-        <tr>
-          <td>
-            { `${station.postcode} ${station.city}, ${station.address}` }
-            </td>
-          </tr>
       </table>
       <table class="stationstats">
           <tr v-once>
@@ -95,6 +115,29 @@ export default function StationStats(props: PageProps) {
               )
             }}) }
       </table>
+      <div class="extra_info">
+        <div class="facilities">
+          <h3>Services</h3>
+          <ul>
+          { station.facilities.map((entry: string) => {
+              if (ger_facilities[entry] !== undefined && ger_facilities[entry] !== "") {
+                return (
+                  <li>{ger_facilities[entry]}</li>
+                )
+              }
+              
+            })
+          }
+          </ul>
+        </div>
+        <div class="contact">
+          <h3>Kontakt</h3>
+          {station.name}<br />
+          {station.address}<br />
+          {station.postcode} {station.city}<br />
+          {station.telephone}
+        </div>
+      </div>
   </Layout>
   );
 }

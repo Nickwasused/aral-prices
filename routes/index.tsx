@@ -1,59 +1,42 @@
-/** @jsx h */
-import { h } from "preact";
 import Layout from "../components/layout.tsx";
 import stations from '../stations.json' assert { type: "json" };
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { Head, asset } from "$fresh/runtime.ts";
-
-type stationdata = {
-  id: string,
-  name: string,
-  lat: string,
-  lng: string,
-  adress: string,
-  city: string,
-  state: string,
-  postcode: string,
-  country_code: string,
-  telephone: string,
-  facilities: string[],
-  products: string[],
-  opening_hours: string[],
-  open_status: string,
-  site_brand: string,
-  watchlist_id?: string,
-  website?: string
-}
-
-interface Data {
-results: stationdata[];
-query: string;
-}
+import { stationdata, Data, ger_facilities } from "./data.ts";
 
 export const handler: Handlers<Data> = {
 GET(req, ctx) {
   const url = new URL(req.url);
+  const facilities: string[] = url.searchParams.getAll("facilities") || "";
+  console.log(facilities);
   let query = url.searchParams.get("q") || "";
   query = query.toLocaleLowerCase()
   if (query == "" || query == undefined) {
-      const results = [];
+      const results: stationdata[] = [];
 
-      return ctx.render({ results, query });
+      return ctx.render({ results, query, facilities });
   } else {
-      const results: stationdata[] = stations.filter((station) => (
+      const results: stationdata[] = stations.filter((station)=> (
+        (
           station.city.toLocaleLowerCase().includes(query) ||
           station.name.toLocaleLowerCase().includes(query) ||
           station.postcode.toLocaleLowerCase().includes(query) ||
           station.address.toLocaleLowerCase().includes(query)
+        ) &&
+          (
+            facilities.forEach((entry) => (
+              station.facilities.includes(entry)
+            ))
+          )
       ));
 
-      return ctx.render({ results, query });
-  }
-},
+      return ctx.render({ results, query, facilities });
+    }
+  },
 };
 
 export default function Home({ data }: PageProps<Data>) {
-  const { results, query } = data;
+  const { results, query, facilities } = data;
   return (
     <Layout>
       <Head>
@@ -68,7 +51,15 @@ export default function Home({ data }: PageProps<Data>) {
           <tr>
             <td>
             <form>
-              <input type="text" name="q" placeholder="Stadt, Postleitzahl, Name, Straße"></input>
+              <input type="text" name="q" placeholder="Stadt, Postleitzahl, Name, Straße" value={query ? query:""}></input>
+              {
+                Object.entries(ger_facilities).map((element) => (
+                  <span>
+                    <input type="checkbox" id={element[0]} name="facilities" value={element[0]} />
+                    <label for={element[0]}>{element[1]}</label>&nbsp;
+                  </span>
+                ))
+              }
             </form>
             </td>
           </tr>

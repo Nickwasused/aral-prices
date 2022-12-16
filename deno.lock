@@ -130,12 +130,17 @@
     "https://esm.sh/preact-render-to-string@5.2.1?external=preact": "b9cf3ec673b7cdecf5ad3d46e27a56e46efd6cb87143ccea23510da0aada49bd",
     "https://esm.sh/preact@10.10.0": "1faf39b7f1a170634160d61045c10ae9dd5af8215d00b9bfa1a5bd818ea89ceb",
     "https://esm.sh/preact@10.10.0/hooks": "ab9bbd385651310948a6794bcdb6dbb9ed9e7060a0b0e8af4448c7107f35c1b6",
+    "https://esm.sh/preact@10.10.0/jsx-runtime": "786321c85434810012c3e29f13bc1d2f308e5af06fa20f990c24591da16dc2d3",
     "https://esm.sh/stable/preact@10.10.0/deno/hooks.js": "d42f1e771ca88df0fd728e49d81fa3b155266ecae52dcf6fdc55232583a2058d",
+    "https://esm.sh/stable/preact@10.10.0/deno/jsx-runtime.js": "6f2c74cd96bf217364595f49cd62ecd85ee84b214681785ad64e16a8ef564263",
     "https://esm.sh/stable/preact@10.10.0/deno/preact.js": "b0b5f4c36e1c83b61cc79ffda59bc57d105682a644760f3ff31a709ecd33ae43",
     "https://esm.sh/v92/preact-render-to-string@5.2.1/X-ZS9wcmVhY3Q/deno/preact-render-to-string.js": "ad49a0c92cfa93339a267f6ff6bd91adf6e1d492198a63051956dab2263c6218",
     "https://esm.sh/v92/preact-render-to-string@5.2.1/X-ZS9wcmVhY3Q/src/index.d.ts": "b1d73703252c8570fdf2952475805f5808ba3511fefbd93a3e7bd8406de7dcd0",
     "https://esm.sh/v92/preact@10.10.0/hooks/src/index.d.ts": "272fdead5f29c6ad17b8332588a1652fc5bbefb97b5f29d931c55342f4b024f9",
     "https://esm.sh/v92/preact@10.10.0/src/index.d.ts": "d3e2e5125321d592d2458226f311de66411f2fa949e546cbaaefa533c4fb89e3",
-    "https://esm.sh/v92/preact@10.10.0/src/jsx.d.ts": "d6bcf6c6608b078063831ded646fa023b51b6fe91d5732343c90d19d968270a0"
+    "https://esm.sh/v92/preact@10.10.0/src/jsx.d.ts": "d6bcf6c6608b078063831ded646fa023b51b6fe91d5732343c90d19d968270a0",
+    "https://esm.sh/v99/preact@10.10.0/jsx-runtime/src/index.d.ts": "e153460ed2b3fe2ad8b93696ecd48fbf73cd628b0b0ea6692b71804a3af69dfd",
+    "https://esm.sh/v99/preact@10.10.0/src/index.d.ts": "d3e2e5125321d592d2458226f311de66411f2fa949e546cbaaefa533c4fb89e3",
+    "https://esm.sh/v99/preact@10.10.0/src/jsx.d.ts": "d6bcf6c6608b078063831ded646fa023b51b6fe91d5732343c90d19d968270a0"
   }
 }

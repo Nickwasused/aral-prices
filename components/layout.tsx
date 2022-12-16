@@ -1,5 +1,4 @@
-/** @jsx h */
-import { h, Fragment } from "preact";
+import { Fragment } from "preact";
 import { asset } from "$fresh/runtime.ts";
 
 export const Head = () => (

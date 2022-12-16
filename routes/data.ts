@@ -2,6 +2,8 @@ export const ger_facilities = {
     "open_24_hours": "24 Stunden geöffnet",
     "car_wash": "Waschanlage",
     "jet_wash": "JetWash",
+    "special_car_wash": "Besondere Waschanlage",
+    "car_wash_plant": "Waschstrasse",
     "super_wash": "SuperWash",
     "recup": "RECUP - Pfandbecher",
     "shop": "Aral Store",
@@ -9,7 +11,6 @@ export const ger_facilities = {
     "pay_at_pump_supported": "Bezahlen an der Zapfsäule",
     "outdoor_payment_terminal": "Outdoor-Zahlungsterminal",
     "loyalty": "PAYBACK & Aral FuelCard",
-    "special_car_wash": "Spezielle Waschanlage",
     "vda": "VDA Konform Siegel",
     "open_saturday": "Samstags geöffnet",
     "open_sunday": "Sonntags geöffnet",
@@ -20,7 +21,8 @@ export const ger_facilities = {
     "electric_charging": "Ladesäulen",
     "truck_parking": "Autohof",
     "motorway_site": "Autobahnnah",
-    "truck_wash": "Truck Wash"
+    "truck_wash": "Truck Wash",
+    "restaurant": "Restaurant"
 }
 
 export interface Stats {

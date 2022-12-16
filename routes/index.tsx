@@ -2,12 +2,13 @@ import Layout from "../components/layout.tsx";
 import stations from '../stations.json' assert { type: "json" };
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { Head, asset } from "$fresh/runtime.ts";
-import { stationdata, Data, ger_facilities } from "./data.ts";
+import { stationdata, Data, ger_facilities, fuel } from "./data.ts";
 
 export const handler: Handlers<Data> = {
 GET(req, ctx) {
   const url = new URL(req.url);
   const facilities: string[] = url.searchParams.getAll("facilities");
+  const fuel: string[] = url.searchParams.getAll("fuel");
   let query: string = url.searchParams.get("q") || "";
   query = query.toLocaleLowerCase()
   let results: stationdata[] = [];
@@ -26,6 +27,13 @@ GET(req, ctx) {
   if (facilities.length !==0) {
     results = results.filter((station)=> (
       facilities.every((entry) => station.facilities.includes(entry))
+    ));
+  }
+
+  // filter for fuel
+  if (fuel.length !==0) {
+    results = results.filter((station)=> (
+      fuel.every((entry) => station.products.includes(entry))
     ));
   }
 
@@ -50,6 +58,14 @@ export default function Home({ data }: PageProps<Data>) {
             <form>
               <input type="text" name="q" placeholder="Stadt, Postleitzahl, Name, Straße" value={query ? query:""}></input>
               {
+                fuel.map((element: string) => (
+                  <span>
+                    <input type="checkbox" id={element} name="fuel" value={element} />
+                    <label for={element}>{element}</label>&nbsp;
+                  </span>
+                ))
+              } <br /><br />
+              {
                 Object.entries(ger_facilities).map((element) => (
                   <span>
                     <input type="checkbox" id={element[0]} name="facilities" value={element[0]} />
@@ -57,7 +73,8 @@ export default function Home({ data }: PageProps<Data>) {
                   </span>
                 ))
               } <br />
-              <input type="submit" value="suchen" />
+              <input type="submit" style="display: none" />
+              <input type="submit" value="suchen" class="wrapper" />
             </form>
             </td>
           </tr>
@@ -79,8 +96,8 @@ export default function Home({ data }: PageProps<Data>) {
               <td>Stadt</td>
               <td>Name</td>
           </tr>
-          {results.map((station) => (
-              <tr onClick={'location.href="/station/' + station.id + '"'}>
+          {results.map((station: stationdata) => (
+              <tr onClick={`location.href="/station/${station.id}"`}>
                   <td>{station.postcode}</td>
                   <td>{station.city}</td>
                   <td>{station.name}</td>

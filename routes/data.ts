@@ -25,6 +25,19 @@ export const ger_facilities = {
     "restaurant": "Restaurant"
 }
 
+export const fuel: string[] = [
+    "ultimate",
+    "ultimate_diesel",
+    "lpg",
+    "ad_blue",
+    "super_e5",
+    "e10",
+    "truck_diesel",
+    "super_98",
+    "natural_gas",
+    "electric_charging"
+]
+
 export interface Stats {
     id: number;
     aral_id: string;

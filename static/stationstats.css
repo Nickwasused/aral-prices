@@ -48,3 +48,13 @@ td img {
     width: 50%;
     padding: 1%;
 }
+
+@media (max-width: 800px) {
+    .extra_info {
+        flex-direction: column;
+    }
+    .contact,
+    .facilities {
+        width: 100%;
+    }
+}

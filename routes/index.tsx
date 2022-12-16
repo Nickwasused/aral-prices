@@ -7,33 +7,30 @@ import { stationdata, Data, ger_facilities } from "./data.ts";
 export const handler: Handlers<Data> = {
 GET(req, ctx) {
   const url = new URL(req.url);
-  const facilities: string[] = url.searchParams.getAll("facilities") || "";
-  console.log(facilities);
-  let query = url.searchParams.get("q") || "";
+  const facilities: string[] = url.searchParams.getAll("facilities");
+  let query: string = url.searchParams.get("q") || "";
   query = query.toLocaleLowerCase()
-  if (query == "" || query == undefined) {
-      const results: stationdata[] = [];
+  let results: stationdata[] = [];
 
-      return ctx.render({ results, query, facilities });
-  } else {
-      const results: stationdata[] = stations.filter((station)=> (
-        (
-          station.city.toLocaleLowerCase().includes(query) ||
-          station.name.toLocaleLowerCase().includes(query) ||
-          station.postcode.toLocaleLowerCase().includes(query) ||
-          station.address.toLocaleLowerCase().includes(query)
-        ) &&
-          (
-            facilities.forEach((entry) => (
-              station.facilities.includes(entry)
-            ))
-          )
-      ));
+  // filter for city, name, postcode and address
+  if (query !== "" && query !== undefined) {
+    results = stations.filter((station) => (
+      station.city.toLocaleLowerCase().includes(query) ||
+      station.name.toLocaleLowerCase().includes(query) ||
+      station.postcode.toLocaleLowerCase().includes(query) ||
+      station.address.toLocaleLowerCase().includes(query)
+    ));
+  }
 
-      return ctx.render({ results, query, facilities });
-    }
-  },
-};
+  // filter for facilities
+  if (facilities.length !==0) {
+    results = results.filter((station)=> (
+      facilities.every((entry) => station.facilities.includes(entry))
+    ));
+  }
+
+  return ctx.render({ results, query, facilities });
+}};
 
 export default function Home({ data }: PageProps<Data>) {
   const { results, query, facilities } = data;
@@ -59,7 +56,8 @@ export default function Home({ data }: PageProps<Data>) {
                     <label for={element[0]}>{element[1]}</label>&nbsp;
                   </span>
                 ))
-              }
+              } <br />
+              <input type="submit" value="suchen" />
             </form>
             </td>
           </tr>

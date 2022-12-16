@@ -83,7 +83,7 @@ export default function StationStats(props: PageProps) {
       </table>
       <div class="extra_info">
         <div class="facilities">
-          <h3>Services</h3>
+          <h2>Services</h2>
           <ul>
           { station.facilities.map((entry: string) => {
               if (ger_facilities[entry] !== undefined && ger_facilities[entry] !== "") {
@@ -97,7 +97,7 @@ export default function StationStats(props: PageProps) {
           </ul>
         </div>
         <div class="contact">
-          <h3>Kontakt</h3>
+          <h2>Kontakt</h2>
           {station.name}<br />
           {station.address}<br />
           {station.postcode} {station.city}<br />

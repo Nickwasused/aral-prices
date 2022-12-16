@@ -25,7 +25,7 @@ export const ger_facilities = {
     "restaurant": "Restaurant"
 }
 
-export const fuel: string[] = [
+export const ger_fuel: string[] = [
     "ultimate",
     "ultimate_diesel",
     "lpg",
@@ -62,12 +62,13 @@ export type stationdata = {
     opening_hours: string[],
     open_status: string,
     site_brand: string,
-    watchlist_id?: string,
-    website?: string
+    watchlist_id: string,
+    website: string
 }
 
 export interface Data {
     results: stationdata[];
     query: string;
     facilities: string[];
+    fuel: string[];
 }

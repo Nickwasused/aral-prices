@@ -2,7 +2,7 @@ import Layout from "../components/layout.tsx";
 import stations from '../stations.json' assert { type: "json" };
 import { Handlers, PageProps } from "$fresh/server.ts";
 import { Head, asset } from "$fresh/runtime.ts";
-import { stationdata, Data, ger_facilities, fuel } from "./data.ts";
+import { stationdata, Data, ger_facilities, ger_fuel } from "./data.ts";
 
 export const handler: Handlers<Data> = {
 GET(req, ctx) {
@@ -37,11 +37,11 @@ GET(req, ctx) {
     ));
   }
 
-  return ctx.render({ results, query, facilities });
+  return ctx.render({ results, query, facilities, fuel });
 }};
 
 export default function Home({ data }: PageProps<Data>) {
-  const { results, query, facilities } = data;
+  const { results, query, facilities, fuel } = data;
   return (
     <Layout>
       <Head>
@@ -58,9 +58,9 @@ export default function Home({ data }: PageProps<Data>) {
             <form>
               <input type="text" name="q" placeholder="Stadt, Postleitzahl, Name, Straße" value={query ? query:""}></input>
               {
-                fuel.map((element: string) => (
+                ger_fuel.map((element: string) => (
                   <span>
-                    <input type="checkbox" id={element} name="fuel" value={element} />
+                    {fuel.includes(element) ? <input type="checkbox" id={element} name="fuel" value={element} checked />:<input type="checkbox" id={element} name="fuel" value={element} />}
                     <label for={element}>{element}</label>&nbsp;
                   </span>
                 ))
@@ -68,7 +68,7 @@ export default function Home({ data }: PageProps<Data>) {
               {
                 Object.entries(ger_facilities).map((element) => (
                   <span>
-                    <input type="checkbox" id={element[0]} name="facilities" value={element[0]} />
+                    {facilities.includes(element[0]) ? <input type="checkbox" id={element[0]} name="facilities" value={element[0]} checked />: <input type="checkbox" id={element[0]} name="facilities" value={element[0]} />}
                     <label for={element[0]}>{element[1]}</label>&nbsp;
                   </span>
                 ))
@@ -81,7 +81,7 @@ export default function Home({ data }: PageProps<Data>) {
       </table>
       <Head>
           <link rel="stylesheet" href={asset('/stationlist.css')} />
-          <meta name="description" content={"Tankpreise für "  + query + "."}></meta>
+          <meta name="description" content={`Tankpreise für ${query}.`}></meta>
       </Head>
       <table class="header_table">
         <tr>

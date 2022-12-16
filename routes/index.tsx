@@ -58,18 +58,18 @@ export default function Home({ data }: PageProps<Data>) {
             <form>
               <input type="text" name="query" placeholder="Stadt, Postleitzahl, Name, Straße" value={query ? query:""}></input>
               {
-                ger_fuel.map((element: string) => (
+                ger_fuel.map((element: string, index: number) => (
                   <span>
-                    {fuel.includes(element) ? <input type="checkbox" id={element} name="fuel" value={element} checked />:<input type="checkbox" id={element} name="fuel" value={element} />}
-                    <label for={element}>{element}</label>&nbsp;
+                    {fuel.includes(element) ? <input type="checkbox" id={`${element}-${index}`} name="fuel" value={element} checked />:<input type="checkbox" id={`${element}-${index}`} name="fuel" value={element} />}
+                    <label for={`${element}-${index}`}>{element}</label>&nbsp;
                   </span>
                 ))
               } <br /><br />
               {
-                Object.entries(ger_facilities).map((element) => (
+                Object.entries(ger_facilities).map((element: [string, string], index: number) => (
                   <span>
-                    {facilities.includes(element[0]) ? <input type="checkbox" id={element[0]} name="facilities" value={element[0]} checked />: <input type="checkbox" id={element[0]} name="facilities" value={element[0]} />}
-                    <label for={element[0]}>{element[1]}</label>&nbsp;
+                    {facilities.includes(element[0]) ? <input type="checkbox" id={`${element[0]}-${index}`} name="facilities" value={element[0]} checked />: <input type="checkbox" id={`${element[0]}-${index}`} name="facilities" value={element[0]} />}
+                    <label for={`${element[0]}-${index}`}>{element[1]}</label>&nbsp;
                   </span>
                 ))
               } <br />

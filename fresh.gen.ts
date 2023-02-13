@@ -3,15 +3,17 @@
 // This file is automatically updated during development when running `dev.ts`.
 
 import config from "./deno.json" assert { type: "json" };
-import * as $0 from "./routes/data.ts";
-import * as $1 from "./routes/index.tsx";
-import * as $2 from "./routes/station/[stationid].tsx";
+import * as $0 from "./routes/_middleware.ts";
+import * as $1 from "./routes/data.ts";
+import * as $2 from "./routes/index.tsx";
+import * as $3 from "./routes/station/[stationid].tsx";
 
 const manifest = {
   routes: {
-    "./routes/data.ts": $0,
-    "./routes/index.tsx": $1,
-    "./routes/station/[stationid].tsx": $2,
+    "./routes/_middleware.ts": $0,
+    "./routes/data.ts": $1,
+    "./routes/index.tsx": $2,
+    "./routes/station/[stationid].tsx": $3,
   },
   islands: {},
   baseUrl: import.meta.url,

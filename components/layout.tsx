@@ -16,7 +16,7 @@ export const Head = () => (
         <meta name="msapplication-config" content="/favicon/browserconfig.xml" />
         <meta name="theme-color" content="#e0e0d1" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Nick`s Tank-Preis Liste</title>
+        <title>Aral Tank-Preis Liste</title>
     </head>
 );
 

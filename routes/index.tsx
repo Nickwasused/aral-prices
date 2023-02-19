@@ -83,27 +83,31 @@ export default function Home({ data }: PageProps<Data>) {
           <link rel="stylesheet" href={asset('/stationlist.css')} />
           <meta name="description" content={`Tankpreise für ${query}.`}></meta>
       </Head>
-      <table class="header_table">
-        <tr>
-            <td>
-                <h2>Ergebnisse: { Object.keys(results).length }</h2>
-            </td>
-        </tr>
-      </table>
-      <table class="stationlist">
-          <tr>
-              <td>Postleitzahl</td>
-              <td>Stadt</td>
-              <td>Name</td>
-          </tr>
-          {results.map((station: stationdata) => (
-              <tr onClick={`location.href="/station/${station.id}"`}>
-                  <td>{station.postcode}</td>
-                  <td>{station.city}</td>
-                  <td>{station.name}</td>
-              </tr>
-          ))}
-      </table>
+      { (Object.keys(results).length > 0) && (
+        <span>
+            <table class="header_table">
+                <tr>
+                    <td>
+                        <h2>Ergebnisse: { Object.keys(results).length }</h2>
+                    </td>
+                </tr>
+            </table>
+            <table class="stationlist">
+                <tr>
+                    <td>Postleitzahl</td>
+                    <td>Stadt</td>
+                    <td>Name</td>
+                </tr>
+                {results.map((station: stationdata) => (
+                    <tr onClick={`location.href="/station/${station.id}"`}>
+                        <td>{station.postcode}</td>
+                        <td>{station.city}</td>
+                        <td>{station.name}</td>
+                    </tr>
+                ))}
+            </table>
+        </span>
+      ) }
     </Layout>
   );
 }

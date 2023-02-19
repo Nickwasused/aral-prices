@@ -14,7 +14,7 @@ empty_site = """<url>
     <lastmod>{}</lastmod>
 </url>"""
 
-base_url = "https://aral.nickwasused.com/station/{}"
+base_url = "https://tankpreise.uk/station/{}"
 
 def load_json(file):
     f = open(file, encoding="utf8")

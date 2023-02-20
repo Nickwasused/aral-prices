@@ -11,7 +11,7 @@ export async function handler(
 	);
 	resp.headers.set(
 		'content-security-policy',
-		'default-src \'self\'; img-src \'self\' https://external-content.duckduckgo.com/iu/?u=; report-uri https://nickwasused.report-uri.com/r/d/csp/enforce;',
+		'default-src \'self\'; script-src \'self\' \'unsafe-inline\'; img-src \'self\' https://external-content.duckduckgo.com/iu/?u=; report-uri https://nickwasused.report-uri.com/r/d/csp/enforce;',
 	);
 	resp.headers.set('X-Frame-Options', 'DENY');
 	resp.headers.set('X-Content-Type-Options', 'nosniff');

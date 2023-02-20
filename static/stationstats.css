@@ -52,9 +52,11 @@ td img {
 @media (max-width: 800px) {
     .extra_info {
         flex-direction: column;
+        max-width: 99%;
     }
     .contact,
     .facilities {
         width: 100%;
+        padding-top: 1%;
     }
 }

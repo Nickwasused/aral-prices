@@ -73,7 +73,6 @@ export default function Home({ data }: PageProps<Data>) {
                   </span>
                 ))
               } <br />
-              <input type="submit" style="display: none" />
               <input type="submit" value="suchen" class="wrapper" />
             </form>
             </td>

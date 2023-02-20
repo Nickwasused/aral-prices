@@ -7,13 +7,10 @@ import { Data, ger_facilities, ger_fuel, stationdata } from './data.ts';
 export const handler: Handlers<Data> = {
 	GET(req, ctx) {
 		const url = new URL(req.url);
-		const facilities: string[] = url.searchParams.getAll('facilities') ||
-			[];
+		const facilities: string[] = url.searchParams.getAll('facilities') || [];
 		const fuel: string[] = url.searchParams.getAll('fuel') || [];
 		let query: string = url.searchParams.get('query') || '';
 		query = query.toLocaleLowerCase();
-
-		// we got everything to filter
 
 		const results: stationdata[] = stations.filter((station) => (
 			station.city.toLocaleLowerCase().includes(query) &&
@@ -92,9 +89,7 @@ export default function Home({ data }: PageProps<Data>) {
 										if (facilities.includes(element[0])) {
 											return (
 												<option
-													id={`${
-														element[0]
-													}-${index}`}
+													id={`${element[0]}-${index}`}
 													value={element[0]}
 													selected
 												>
@@ -104,9 +99,7 @@ export default function Home({ data }: PageProps<Data>) {
 										} else {
 											return (
 												<option
-													id={`${
-														element[0]
-													}-${index}`}
+													id={`${element[0]}-${index}`}
 													value={element[0]}
 												>
 													{element[1]}

@@ -11,15 +11,20 @@ export const handler: Handlers<Data> = {
 		const fuel: string[] = url.searchParams.getAll('fuel') || [];
 		let query: string = url.searchParams.get('query') || '';
 		query = query.toLocaleLowerCase();
+		let results: stationdata[] = [];
 
-		const results: stationdata[] = stations.filter((station) => (
-			station.city.toLocaleLowerCase().includes(query) &&
-			station.name.toLocaleLowerCase().includes(query) &&
-			station.postcode.toLocaleLowerCase().includes(query) &&
-			station.address.toLocaleLowerCase().includes(query) &&
-			facilities.every((entry) => station.facilities.includes(entry)) &&
-			fuel.every((entry) => station.products.includes(entry))
-		));
+		if (query == '' && facilities.length == 0 && fuel.length == 0) {
+			results = [];
+		} else {
+			results = stations.filter((station) => (
+				station.city.toLocaleLowerCase().includes(query) &&
+				station.name.toLocaleLowerCase().includes(query) &&
+				station.postcode.toLocaleLowerCase().includes(query) &&
+				station.address.toLocaleLowerCase().includes(query) &&
+				facilities.every((entry) => station.facilities.includes(entry)) &&
+				fuel.every((entry) => station.products.includes(entry))
+			));
+		}
 
 		return ctx.render({ results, query, facilities, fuel });
 	},

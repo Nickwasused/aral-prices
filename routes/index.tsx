@@ -17,12 +17,12 @@ export const handler: Handlers<Data> = {
 			results = [];
 		} else {
 			results = stations.filter((station) => (
-				station.city.toLocaleLowerCase().includes(query) &&
-				station.name.toLocaleLowerCase().includes(query) &&
-				station.postcode.toLocaleLowerCase().includes(query) &&
-				station.address.toLocaleLowerCase().includes(query) &&
-				facilities.every((entry) => station.facilities.includes(entry)) &&
-				fuel.every((entry) => station.products.includes(entry))
+				(station.city.toLocaleLowerCase().includes(query) ||
+				station.name.toLocaleLowerCase().includes(query) ||
+				station.postcode.toLocaleLowerCase().includes(query) ||
+				station.address.toLocaleLowerCase().includes(query)) &&
+				facilities.every((entry: string) => station.facilities.includes(entry)) &&
+				fuel.every((entry: string) => station.products.includes(entry))
 			));
 		}
 

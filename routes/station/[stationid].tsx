@@ -1,6 +1,6 @@
 import { Handlers, PageProps } from '$fresh/server.ts';
 import Layout from '../../components/layout.tsx';
-import stations from '../../stations.json' assert { type: 'json' };
+import stations from '../../stations_min.json' assert { type: 'json' };
 import { asset, Head } from '$fresh/runtime.ts';
 import { ger_facilities, Stats } from '../data.ts';
 

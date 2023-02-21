@@ -20,7 +20,7 @@ def load_json(file):
     f = open(file, encoding="utf8")
     return load(f)
 
-station_path = Path(__file__).parent.absolute().joinpath('stations.json')
+station_path = Path(__file__).parent.absolute().joinpath('stations_min.json')
 output_path = Path(__file__).parent.absolute().joinpath('./static/sitemap.xml')
 output_path_facilities = Path(__file__).parent.absolute().joinpath('./facilities.json')
 output_path_fuel = Path(__file__).parent.absolute().joinpath('./fuel.json')

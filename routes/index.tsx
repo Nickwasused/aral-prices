@@ -36,11 +36,10 @@ export default function Home({ data }: PageProps<Data>) {
 		<Layout>
 			<Head>
 				<title>Aral Tank-Preis Liste</title>
-				<meta
-					name='description'
-					content='Tankpreise für verschiedene Aral Tankstellen.'
-				>
-				</meta>
+				{query
+					? <meta name='description' content={`Tankpreise für ${query}.`} />
+					: <meta name='description' content='Tankpreise für verschiedene Aral Tankstellen.' />}
+				<link rel='stylesheet' href={asset('/stationlist.css')} />
 			</Head>
 			<table class='header_table'>
 				<tr>
@@ -85,7 +84,6 @@ export default function Home({ data }: PageProps<Data>) {
 									},
 								)}
 							</select>
-
 							<select name='facilities' multiple>
 								{Object.entries(ger_facilities).map(
 									(
@@ -124,11 +122,6 @@ export default function Home({ data }: PageProps<Data>) {
 					</td>
 				</tr>
 			</table>
-			<Head>
-				<link rel='stylesheet' href={asset('/stationlist.css')} />
-				<meta name='description' content={`Tankpreise für ${query}.`}>
-				</meta>
-			</Head>
 			{(Object.keys(results).length > 0) && (
 				<span>
 					<table class='header_table'>

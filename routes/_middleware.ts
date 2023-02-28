@@ -2,7 +2,7 @@ import { MiddlewareHandlerContext } from '$fresh/server.ts';
 
 export async function handler(
 	req: Request,
-	ctx: MiddlewareHandlerContext<any>,
+	ctx: MiddlewareHandlerContext,
 ) {
 	const resp = await ctx.next();
 	resp.headers.set(

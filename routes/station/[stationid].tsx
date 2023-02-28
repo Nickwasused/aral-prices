@@ -79,7 +79,7 @@ export default function StationStats(props: PageProps) {
 									{fuel.name}
 								</td>
 								<td>
-									{(fuel.price.price / 100).toFixed(2)} €
+									{(parseInt(fuel.price.price) / 100).toFixed(2)} €
 								</td>
 								<td>
 									{new Date(

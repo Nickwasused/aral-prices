@@ -1,4 +1,8 @@
-export const ger_facilities = {
+interface facilitie {
+	[key: string]: string;
+}
+
+export const ger_facilities: facilitie = {
 	'open_24_hours': '24 Stunden geöffnet',
 	'car_wash': 'Waschanlage',
 	'jet_wash': 'JetWash',
@@ -43,7 +47,14 @@ export interface Stats {
 	aral_id: string;
 	name: string;
 	icon: string;
-	price: any;
+	price: {
+		id: number;
+		display_price: string;
+		price: string;
+		currency: string;
+		valid_from: string;
+		error?: string;
+	};
 }
 
 export type stationdata = {

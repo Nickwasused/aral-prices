@@ -125,3 +125,7 @@ select {
         width: 99%;
     }
 }
+
+p {
+    text-align: center;
+}

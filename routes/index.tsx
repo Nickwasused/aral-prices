@@ -18,9 +18,9 @@ export const handler: Handlers<Data> = {
 		} else {
 			results = stations.filter((station) => (
 				(station.city.toLocaleLowerCase().includes(query) ||
-				station.name.toLocaleLowerCase().includes(query) ||
-				station.postcode.toLocaleLowerCase().includes(query) ||
-				station.address.toLocaleLowerCase().includes(query)) &&
+					station.name.toLocaleLowerCase().includes(query) ||
+					station.postcode.toLocaleLowerCase().includes(query) ||
+					station.address.toLocaleLowerCase().includes(query)) &&
 				facilities.every((entry: string) => station.facilities.includes(entry)) &&
 				fuel.every((entry: string) => station.products.includes(entry))
 			));
@@ -35,6 +35,7 @@ export default function Home({ data }: PageProps<Data>) {
 	return (
 		<Layout>
 			<Head>
+				<title>Aral Tank-Preis Liste</title>
 				<meta
 					name='description'
 					content='Tankpreise für verschiedene Aral Tankstellen.'

@@ -17,42 +17,8 @@ html {
     box-sizing: border-box;
 }
 
-table p {
-    font-size: 1.5rem;
-}
-
-h1 {
-    font-size: 2.5rem;
-}
-
 body {
     margin: 0;
-}
-
-a {
-    color: white;
-    text-decoration: none;
-}
-
-.fa-circle {
-    color: red;
-}
-
-.fa-circle:hover {
-    color: red;
-}
-
-a:hover {
-    color: #fcd401;
-}
-
-.head {
-    text-align: center;
-}
-
-img {
-    width: 100%;
-    height: 100%;
 }
 
 table {
@@ -71,18 +37,12 @@ tr:nth-of-type(even) {
     background-color: rgb(65, 65, 65);
 }
 
-input[type="text"] {
-    width: 100%;
-    padding: 1%;
-}
-
 .wrapper {
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
 
 input[type="submit"],
 .wrapper a {
@@ -109,15 +69,6 @@ input[type="submit"]:hover,
     margin-bottom: .5%;
     margin-top: .5%;
     text-align: center;
-}
-
-input[type="text"] {
-    padding: 1%;
-}
-
-select {
-    padding: 1%;
-    margin: 1.2%;
 }
 
 @media (max-width: 800px) {

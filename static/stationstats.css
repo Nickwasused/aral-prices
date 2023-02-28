@@ -28,6 +28,7 @@ img {
 td img {
     display: inline;
     width: 2em;
+    min-height: 4.33vh;
 }
 
 @media (max-width: 600px) {

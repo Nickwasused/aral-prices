@@ -11,6 +11,7 @@ h1 {
 input[type="text"] {
     width: 100%;
     padding: 1%;
+    margin: 1%;
 }
 
 select {

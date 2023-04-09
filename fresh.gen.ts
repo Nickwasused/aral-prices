@@ -7,7 +7,8 @@ import * as $0 from './routes/_404.jsx';
 import * as $1 from './routes/_middleware.ts';
 import * as $2 from './routes/data.ts';
 import * as $3 from './routes/index.tsx';
-import * as $4 from './routes/station/[stationid].tsx';
+import * as $4 from './routes/privacy.tsx';
+import * as $5 from './routes/station/[stationid].tsx';
 
 const manifest = {
 	routes: {
@@ -15,7 +16,8 @@ const manifest = {
 		'./routes/_middleware.ts': $1,
 		'./routes/data.ts': $2,
 		'./routes/index.tsx': $3,
-		'./routes/station/[stationid].tsx': $4,
+		'./routes/privacy.tsx': $4,
+		'./routes/station/[stationid].tsx': $5,
 	},
 	islands: {},
 	baseUrl: import.meta.url,

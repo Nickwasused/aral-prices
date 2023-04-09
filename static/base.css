@@ -11,6 +11,10 @@ html {
     text-justify: inter-word;
 }
 
+a {
+    color: white;
+}
+
 *,
 *::before,
 *::after {

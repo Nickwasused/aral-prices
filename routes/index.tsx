@@ -45,6 +45,7 @@ export default function Home({ data }: PageProps<Data>) {
 				<tr>
 					<td>
 						<h1>Tankstellen: {Object.keys(stations).length}</h1>
+                        <span><a href="/privacy">Datenschutzerklärung</a></span>
 					</td>
 				</tr>
 				<tr>

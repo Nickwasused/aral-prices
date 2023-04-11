@@ -141,12 +141,10 @@ export default function Home({ data }: PageProps<Data>) {
 							<td>Name</td>
 						</tr>
 						{results.map((station: stationdata) => (
-							<tr
-								onClick={`location.href="/station/${station.id}"`}
-							>
-								<td>{station.postcode}</td>
-								<td>{station.city}</td>
-								<td>{station.name}</td>
+							<tr>
+								<td><a href={`/station/${station.id}`}>{station.postcode}</a></td>
+								<td><a href={`/station/${station.id}`}>{station.city}</a></td>
+								<td><a href={`/station/${station.id}`}>{station.name}</a></td>
 							</tr>
 						))}
 					</table>

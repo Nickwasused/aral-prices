@@ -57,7 +57,7 @@ export default function StationStats(props: PageProps) {
 				</tr>
 			</table>
 			<table class='stationstats'>
-				<tr v-once>
+				<tr>
 					<td>Icon</td>
 					<td>Kraftstoff</td>
 					<td>Preis in Euro</td>

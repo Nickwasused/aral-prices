@@ -27,29 +27,16 @@ select {
     margin-right: auto;
     padding: 1%;
     width: 75%;
+    margin-bottom: 3%;
 }
 
 .stationlist a {
-    display: flex;
-    background-color: #333;
-    width: 22.5%;
-    justify-content: center;
-    padding: 1%;
-    margin: 1%;
-    border-radius: 5px;
     color: white;
-}
-
-.stationlist a:hover {
-    background-color: rgb(73, 73, 73);
-    color: #009de0;
+    text-decoration: none;
 }
   
 @media (max-width: 896px) {
     .stationlist {
         width: 99%;
-    }
-    .stationlist a {
-        width: 98%;
     }
 }

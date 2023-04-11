@@ -61,6 +61,7 @@ td img {
     padding: 1%;
     text-align: right;
     margin-left: 0.5%;
+    margin-bottom: 1%;
 }
 
 .facilities {
@@ -68,6 +69,7 @@ td img {
     width: 50%;
     padding: 1%;
     margin-right: 0.5%;
+    margin-bottom: 1%;
 }
 
 @media (max-width: 800px) {

@@ -1,5 +1,5 @@
 import Layout from '../components/layout.tsx';
-import stations from '../stations_min.json' assert { type: 'json' };
+import stations from '../data/stations_min.json' assert { type: 'json' };
 import { Handlers, PageProps } from '$fresh/server.ts';
 import { asset, Head } from '$fresh/runtime.ts';
 import { Data, ger_facilities, ger_fuel, stationdata } from './data.ts';

@@ -71,7 +71,6 @@ export type stationdata = {
 	facilities: string[];
 	products: string[];
 	opening_hours: string[];
-	open_status: string;
 	site_brand: string;
 	watchlist_id: string;
 	website: string;

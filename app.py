@@ -7,7 +7,6 @@ from datetime import datetime
 import requests
 import argparse
 import sys
-import os
 
 load_dotenv()
 app = Flask(__name__)
@@ -23,6 +22,21 @@ if not stations:
 stations = loads(stations)
 station_count = len(stations)
 stations_dict = {item["id"]: item for item in stations}
+
+# Preprocess the station data to build index dictionaries
+stations_index = {
+    "name": {},
+    "city": {},
+    "postcode": {},
+    "id": {}
+}
+
+for index, tmp_station in enumerate(stations):
+    for field in ["name", "city", "postcode", "id"]:
+        for term in tmp_station[field].lower().split():
+            if term not in stations_index[field]:
+                stations_index[field][term] = []
+            stations_index[field][term].append(index)
 
 
 @app.template_filter("euro")
@@ -54,10 +68,15 @@ def search():
 
     search_term = search_term.lower()
 
-    return_stations = []
-    for tmp_station in stations:
-        if search_term in tmp_station["name"].lower() or search_term in tmp_station["city"].lower() or search_term in tmp_station["postcode"]:
-            return_stations.append(tmp_station)
+    # Initialize a set to store unique station matches
+    matched_indices = set()
+
+    for field in ["name", "city", "postcode"]:
+        if search_term in stations_index[field]:
+            matched_indices.update(stations_index[field][search_term])
+
+    # Convert indices to actual station data
+    return_stations = [stations[index] for index in matched_indices]
 
     return render_template("raw_search.html", stations=return_stations)
 

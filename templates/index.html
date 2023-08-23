@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<h1 class="border text-center">Tankstellen: {{ station_count }}</h1>
+<div class="container">
+    <input type="text" class="w-100" placeholder="Stadt, Postleitzahl, Name" name="search" id="search" required
+           hx-trigger="keyup[keyCode==13]" hx-target="#results" hx-swap="innerHTML" hx-get="{{ url_for('search') }}">
+</div>
+<div class="container pt-3">
+    <table id="results" class="table"></table>
+</div>
+{% endblock %}

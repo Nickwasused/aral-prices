@@ -76,7 +76,6 @@ def station(station_id):
         return redirect(url_for("index"))
 
     station_data = requests.get(f"https://api.tankstelle.aral.de/api/v2/stations/{station_id}/prices").json()
-    print(station_data)
 
     return render_template("station.html", local_station_data=local_station_data, station_data=station_data)
 

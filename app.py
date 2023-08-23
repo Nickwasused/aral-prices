@@ -7,6 +7,7 @@ from datetime import datetime
 import requests
 import argparse
 import sys
+import os
 
 load_dotenv()
 app = Flask(__name__)
@@ -84,7 +85,10 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.waitress:
-        serve(app, port=8080, host="127.0.0.1")
+        tmp_port = os.getenv("$PORT")
+        if not tmp_port:
+            tmp_port = 8080
+        serve(app, port=tmp_port, host="0.0.0.0")
     else:
         # https://werkzeug.palletsprojects.com/en/2.2.x/serving/#werkzeug.serving.run_simple
         app.run(debug=True)

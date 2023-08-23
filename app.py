@@ -10,8 +10,9 @@ import sys
 
 load_dotenv()
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False
 
-with open("./data/stations_min.json", "r") as f:
+with open("./data/stations_min.json", "r", encoding="utf-8") as f:
     stations = f.read()
 
 if not stations:
@@ -45,6 +46,9 @@ def search():
     search_term = request.args.get("search")
 
     if not search_term:
+        return ""
+
+    if len(search_term) < 4:
         return ""
 
     search_term = search_term.lower()

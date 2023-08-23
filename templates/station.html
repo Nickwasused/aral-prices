@@ -7,17 +7,21 @@
         <h2>{{ local_station_data.name }}</h2>
     </div>
     <table class="table">
-        <tr>
-            <td>Icon</td><td>Kraftstoff</td><td>Preis</td><td>letzte Preisänderung</td>
-        </tr>
+        <thead>
+            <tr>
+                <td style="width:7.5%">Icon</td><td>Kraftstoff</td><td>Preis</td><td>letzte Preisänderung</td>
+            </tr>
+        </thead>
+        <tbody>
         {% for data in station_data.data %}
-        <tr>
-            <th scope="row"><img class="img-fluid" width="7.5%" src="https://external-content.duckduckgo.com/iu/?u=https://api.tankstelle.aral.de{{ data.icon }}"></th>
-            <td>{{ data.name }}</td>
-            <td>{{ data.price.price | euro }}</td>
-            <td>{{ data.price.valid_from | strftime }} Uhr</td>
-        </tr>
+            <tr>
+                <th scope="row"><img class="img-fluid" src="https://external-content.duckduckgo.com/iu/?u=https://api.tankstelle.aral.de{{ data.icon }}"></th>
+                <td>{{ data.name }}</td>
+                <td>{{ data.price.price | euro }}</td>
+                <td>{{ data.price.valid_from | strftime }} Uhr</td>
+            </tr>
         {% endfor %}
+        </tbody>
     </table>
     <a href="{{ url_for('index') }}"><button type="button" class="btn btn-secondary mb-5">zurück</button></a>
 </div>

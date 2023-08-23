@@ -1,5 +1,5 @@
 {% for station in stations %}
-<tr hx-on:click="location.href = '/station/{{ station.id }}';">
+<tr role="button" hx-on:click="location.href = '/station/{{ station.id }}';">
     <td>{{ station.postcode }}</td>
     <td>{{ station.city }}</td>
     <td>{{ station.name }}</td>

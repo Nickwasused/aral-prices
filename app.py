@@ -17,7 +17,7 @@ with open("./data/stations_min.json", "r", encoding="utf-8") as f:
     stations = f.read()
 
 if not stations:
-    app.logger.log("stations not found.")
+    app.logger.warning("stations not found.")
     sys.exit(1)
 
 stations = loads(stations)
@@ -85,6 +85,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.waitress:
+        app.logger.info("app listening on port 5000")
         serve(app, port=5000, host="0.0.0.0")
     else:
         # https://werkzeug.palletsprojects.com/en/2.2.x/serving/#werkzeug.serving.run_simple

@@ -1,42 +1,28 @@
 #!/usr/bin/env python3
-from flask import Flask, render_template, request, abort, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, g
 from dotenv import load_dotenv
 from waitress import serve
-from json import loads
 from datetime import datetime
 import requests
 import argparse
-import sys
+import sqlite3
 
 load_dotenv()
 app = Flask(__name__)
-app.config['JSON_AS_ASCII'] = False
 
-with open("./data/stations_min.json", "r", encoding="utf-8") as f:
-    stations = f.read()
 
-if not stations:
-    app.logger.warning("stations not found.")
-    sys.exit(1)
+def get_db():
+    db = getattr(g, '_database', None)
+    if db is None:
+        db = g._database = sqlite3.connect("./data/aral.db")
+    return db
 
-stations = loads(stations)
-station_count = len(stations)
-stations_dict = {item["id"]: item for item in stations}
 
-# Preprocess the station data to build index dictionaries
-stations_index = {
-    "name": {},
-    "city": {},
-    "postcode": {},
-    "id": {}
-}
-
-for index, tmp_station in enumerate(stations):
-    for field in ["name", "city", "postcode", "id"]:
-        for term in tmp_station[field].lower().split():
-            if term not in stations_index[field]:
-                stations_index[field][term] = []
-            stations_index[field][term].append(index)
+@app.teardown_appcontext
+def close_connection(exception):
+    db = getattr(g, '_database', None)
+    if db is not None:
+        db.close()
 
 
 @app.template_filter("euro")
@@ -53,6 +39,8 @@ def _jinja2_filter_datetime(date):
 
 @app.route("/", methods=["GET"])
 def index():
+    cursor = get_db().cursor()
+    station_count = cursor.execute("SELECT COUNT(*) FROM stations;").fetchone()[0]
     return render_template("index.html", station_count=station_count)
 
 
@@ -67,32 +55,28 @@ def search():
         return ""
 
     search_term = search_term.lower()
+    cursor = get_db().cursor()
 
-    # Initialize a set to store unique station matches
-    matched_indices = set()
-
-    for field in ["name", "city", "postcode"]:
-        if search_term in stations_index[field]:
-            matched_indices.update(stations_index[field][search_term])
-
-    # Convert indices to actual station data
-    return_stations = [stations[index] for index in matched_indices]
+    return_stations = cursor.execute(
+        "SELECT * FROM stations WHERE LOWER(name) LIKE ? OR LOWER(city) LIKE ? OR LOWER(postcode) LIKE ?",
+        (f"%{search_term}%", f"%{search_term}%", f"%{search_term}%",)).fetchall()
 
     return render_template("raw_search.html", stations=return_stations)
 
 
 @app.route("/station/<int:station_id>", methods=["GET"])
 def station(station_id):
-
     if not station_id:
         return redirect(url_for("index"))
 
-    local_station_data = stations_dict.get(str(station_id))
-
+    cursor = get_db().cursor()
+    local_station_data = cursor.execute("SELECT postcode, city, name FROM stations WHERE id = ?;",
+                                        (station_id,)).fetchone()
     if not local_station_data:
         return redirect(url_for("index"))
 
     station_data = requests.get(f"https://api.tankstelle.aral.de/api/v2/stations/{station_id}/prices").json()
+    print(station_data)
 
     return render_template("station.html", local_station_data=local_station_data, station_data=station_data)
 

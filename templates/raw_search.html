@@ -1,7 +1,7 @@
 {% for station in stations %}
-<tr role="button" hx-on:click="location.href = '/station/{{ station.id }}';">
-    <td>{{ station.postcode }}</td>
-    <td>{{ station.city }}</td>
-    <td>{{ station.name }}</td>
+<tr role="button" hx-on:click="location.href = '/station/{{ station[0] }}';">
+    <td>{{ station[7] }}</td>
+    <td>{{ station[5] }}</td>
+    <td>{{ station[1] }}</td>
 </tr>
 {% endfor %}

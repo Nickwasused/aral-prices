@@ -1,13 +1,11 @@
-[![Made with Fresh](https://fresh.deno.dev/fresh-badge.svg)](https://fresh.deno.dev)
 ### Usage
 
 Start the project:
 
 ```
-deno task start
+pip3 install -r requirements.txt
+python3 app.py
 ```
-
-This will watch the project directory and restart as necessary.
 
 # Station Data
 

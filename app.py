@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 from flask import Flask, render_template, request, redirect, url_for, g
+from datetime import datetime, timezone
 from dotenv import load_dotenv
 from waitress import serve
-from datetime import datetime
 import requests
 import argparse
 import sqlite3
@@ -33,7 +33,11 @@ def euro(value):
 
 @app.template_filter("strftime")
 def _jinja2_filter_datetime(date):
+    # Parse the input date string into a datetime object
     date = datetime.strptime(date, "%Y-%m-%d %H:%M:%S")
+    date = date.replace(tzinfo=timezone.utc).astimezone(tz=None)
+
+    # Format the datetime as a string
     return date.strftime("%H:%M")
 
 

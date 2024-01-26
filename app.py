@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from flask import Flask, render_template, request, redirect, url_for, g
+from flask import Flask, render_template, request, redirect, url_for, g, send_file
 from datetime import datetime, timezone
 from dotenv import load_dotenv
 from waitress import serve
@@ -39,6 +39,16 @@ def _jinja2_filter_datetime(date):
 
     # Format the datetime as a string
     return date.strftime("%H:%M")
+
+
+@app.route("/sitemap.xml", methods=["GET"])
+def sitemap():
+    return send_file("./data/sitemap.xml")
+
+
+@app.route("/robots.txt", methods=["GET"])
+def robots():
+    return send_file("./static/robots.txt")
 
 
 @app.route("/", methods=["GET"])

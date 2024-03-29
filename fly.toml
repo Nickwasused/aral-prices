@@ -11,7 +11,25 @@ primary_region = "ams"
 [http_service]
   internal_port = 5000
   force_https = true
-  auto_stop_machines = false
-  auto_start_machines = false
-  min_machines_running = 1
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
   processes = ["app"]
+
+[[http_service.checks]]
+  grace_period = "10s"
+  interval = "30s"
+  method = "GET"
+  timeout = "5s"
+  path = "/"
+
+[[vm]]
+  size = "shared-cpu-1x"
+  memory = "256mb"
+  cpus = 1
+
+
+
+[[statics]]
+  guest_path = "/app/public"
+  url_prefix = "/static"

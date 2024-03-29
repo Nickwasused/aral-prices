@@ -1,15 +1,12 @@
-FROM python:3.12-slim-bullseye
+FROM python:alpine3.19
 
 WORKDIR /app
 
-COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
-
+COPY . .
+RUN pip install --no-cache-dir --no-input -r requirements.txt
+RUN rm /app/requirements.txt
 ENV TZ=Europe/Berlin
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-COPY . .
-
 EXPOSE 5000
-
 CMD [ "python3", "app.py", "-w"]

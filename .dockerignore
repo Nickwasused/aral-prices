@@ -1,8 +1,8 @@
-# flyctl launch added from .gitignore
-**\.idea
-
-# flyctl launch added from .idea\.gitignore
-# Default ignored files
-.idea\shelf
-.idea\workspace.xml
+.*
 fly.toml
+Dockerfile
+README.md
+.gitkeep
+/data/fuel.json
+/data/facilities.json
+venv/

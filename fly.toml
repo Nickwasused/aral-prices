@@ -31,5 +31,5 @@ primary_region = "ams"
 
 
 [[statics]]
-  guest_path = "/app/public"
+  guest_path = "/app/static"
   url_prefix = "/static"

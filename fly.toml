@@ -1,12 +1,10 @@
-# fly.toml app configuration file generated for aral-prices on 2023-09-16T17:03:36+02:00
-#
-# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
-#
-
 app = "aral-prices"
 primary_region = "ams"
+kill_signal = "SIGINT"
+kill_timeout = "5s"
 
-[build]
+[experimental]
+  auto_rollback = true
 
 [http_service]
   internal_port = 5000
@@ -14,7 +12,6 @@ primary_region = "ams"
   auto_stop_machines = true
   auto_start_machines = true
   min_machines_running = 0
-  processes = ["app"]
 
 [[http_service.checks]]
   grace_period = "10s"
@@ -27,8 +24,6 @@ primary_region = "ams"
   size = "shared-cpu-1x"
   memory = "256mb"
   cpus = 1
-
-
 
 [[statics]]
   guest_path = "/app/static"

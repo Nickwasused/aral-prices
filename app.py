@@ -2,9 +2,7 @@
 from flask import Flask, render_template, request, redirect, url_for, g, send_file
 from datetime import datetime, timezone
 from dotenv import load_dotenv
-from waitress import serve
 import requests
-import argparse
 import sqlite3
 
 load_dotenv()
@@ -105,18 +103,6 @@ def station(station_id):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="frontend")
-    parser.add_argument(
-        "-w",
-        "--waitress",
-        help="Define if we want to use waitress for the web server.",
-        action="store_true",
-    )
-    args = parser.parse_args()
-
-    if args.waitress:
-        app.logger.info("app listening on port 5000")
-        serve(app, port=5000, host="0.0.0.0")
-    else:
-        # https://werkzeug.palletsprojects.com/en/2.2.x/serving/#werkzeug.serving.run_simple
-        app.run(debug=True)
+    # during deploy waitress is used like this:
+    # waitress-serve --host 127.0.0.1 --port 5000 app:app
+    app.run(debug=True)

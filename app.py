@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 
 def get_db():
-    db = getattr(g, '_database', None)
+    db = getattr(g, "_database", None)
     if db is None:
         db = g._database = sqlite3.connect("./data/aral.db")
     return db
@@ -20,7 +20,7 @@ def get_db():
 
 @app.teardown_appcontext
 def close_connection(exception):
-    db = getattr(g, '_database', None)
+    db = getattr(g, "_database", None)
     if db is not None:
         db.close()
 
@@ -73,7 +73,12 @@ def search():
 
     return_stations = cursor.execute(
         "SELECT * FROM stations WHERE LOWER(name) LIKE ? OR LOWER(city) LIKE ? OR LOWER(postcode) LIKE ?",
-        (f"%{search_term}%", f"%{search_term}%", f"%{search_term}%",)).fetchall()
+        (
+            f"%{search_term}%",
+            f"%{search_term}%",
+            f"%{search_term}%",
+        ),
+    ).fetchall()
 
     return render_template("raw_search.html", stations=return_stations)
 
@@ -84,20 +89,29 @@ def station(station_id):
         return redirect(url_for("index"))
 
     cursor = get_db().cursor()
-    local_station_data = cursor.execute("SELECT postcode, city, name FROM stations WHERE id = ?;",
-                                        (station_id,)).fetchone()
+    local_station_data = cursor.execute(
+        "SELECT postcode, city, name FROM stations WHERE id = ?;", (station_id,)
+    ).fetchone()
     if not local_station_data:
         return redirect(url_for("index"))
 
-    station_data = requests.get(f"https://api.tankstelle.aral.de/api/v2/stations/{station_id}/prices").json()
+    station_data = requests.get(
+        f"https://api.tankstelle.aral.de/api/v2/stations/{station_id}/prices"
+    ).json()
 
-    return render_template("station.html", local_station_data=local_station_data, station_data=station_data)
+    return render_template(
+        "station.html", local_station_data=local_station_data, station_data=station_data
+    )
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="frontend")
-    parser.add_argument("-w", "--waitress", help="Define if we want to use waitress for the web server.",
-                        action="store_true")
+    parser.add_argument(
+        "-w",
+        "--waitress",
+        help="Define if we want to use waitress for the web server.",
+        action="store_true",
+    )
     args = parser.parse_args()
 
     if args.waitress:

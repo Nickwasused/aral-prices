@@ -12,4 +12,4 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 COPY . .
 
 EXPOSE 5000
-ENTRYPOINT [ "waitress-serve", "--host=127.0.0.1", "--port=5000", "app:app"]
+ENTRYPOINT [ "waitress-serve", "--host=0.0.0.0", "--port=5000", "app:app"]

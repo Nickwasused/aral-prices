@@ -40,8 +40,6 @@ Install the required packages by running:
 pip install -r requirements.txt
 ```
 
-End with an example of getting some data out of the system or using it for a little demo.
-
 ## 🎈 Usage <a name="usage"></a>
 You can start the frontend by running ``python3 app.py``.
 

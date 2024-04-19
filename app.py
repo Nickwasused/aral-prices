@@ -56,6 +56,17 @@ def index():
     return render_template("index.html", station_count=station_count)
 
 
+@app.route("/map", methods=["GET"])
+def display_map():
+    cursor = get_db().cursor()
+
+    tmp_stations = cursor.execute(
+        "SELECT * FROM stations;"
+    ).fetchall()
+    bounds = cursor.execute("SELECT MIN(lat)-1, MIN(lng)-1, MAX(lat)+1, MAX(lng)+1 FROM stations;").fetchone()
+    return render_template("map.html", tmp_stations=tmp_stations, bounds=bounds)
+
+
 @app.route("/raw/search", methods=["GET"])
 def search():
     search_term = request.args.get("search")

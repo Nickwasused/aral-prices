@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    <link href="{{ url_for('static', filename='css/leaflet.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/cluster.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/leaflet.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/pixi.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/markercluster.js') }}"></script>
+
+    <style>
+        html, body {
+            height: 100%;
+        }
+        #map {
+            height: 90%;
+        }
+
+        .bg-gradient-custom {
+            background-image: linear-gradient(225deg, #0a1969, #51a4e3);
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div id="map" style="width:100%"></div>
+<script defer>
+    var map = L.map('map',  { preferCanvas: true, maxBounds: [[{{bounds[0]}}, {{bounds[1]}}], [{{bounds[2]}}, {{bounds[3]}}]]}).setView({lon: 11, lat: 51}, 6);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+    }).addTo(map);
+
+    L.control.scale({imperial: true, metric: true}).addTo(map);
+
+    var markers = L.markerClusterGroup();
+    function markerOnClick(e) {
+         window.location.replace(`/station/${this.options.name}`);
+    }
+
+	const station_icon = L.icon({
+        iconUrl: '/static/images/station.svg',
+        iconSize: [40, 40],
+        iconAnchor: [20, 20],
+        popupAnchor: [-3, -76]
+    });
+
+    {% for station in tmp_stations %}
+    var tmp_marker = L.marker([{{station[2]}}, {{station[3]}}], { icon: station_icon, name: "{{ station[0] }}" }).on('click', markerOnClick);;
+    tmp_marker.bindTooltip("{{ station[1] }}<br/>{{ station[4] }} {{ station[5] }}<br/>").openTooltip();
+    markers.addLayer(tmp_marker);
+    {% endfor %}
+
+    map.addLayer(markers);
+</script>
+<div class="text-center pt-2">
+    <a href="{{ url_for('index') }}"><button type="button" class="btn btn-secondary mb-5">zurück</button></a>
+</div>
+{% endblock %}

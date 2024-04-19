@@ -56,15 +56,24 @@ def index():
     return render_template("index.html", station_count=station_count)
 
 
+def is_it_true(value):
+    return value.lower() == 'true'
+
+
 @app.route("/map", methods=["GET"])
 def display_map():
+    lat = request.args.get("lat", default=51, type=float)
+    lng = request.args.get("lng", default=11, type=float)
+    zoom = request.args.get("zoom", default=6, type=int)
+    disable_control = request.args.get("disable_control", default=True, type=is_it_true)
     cursor = get_db().cursor()
 
     tmp_stations = cursor.execute(
         "SELECT * FROM stations;"
     ).fetchall()
     bounds = cursor.execute("SELECT MIN(lat)-1, MIN(lng)-1, MAX(lat)+1, MAX(lng)+1 FROM stations;").fetchone()
-    return render_template("map.html", tmp_stations=tmp_stations, bounds=bounds)
+    return render_template("map.html", tmp_stations=tmp_stations, bounds=bounds, lat=lat, lng=lng,
+                           zoom=zoom, disable_control=disable_control)
 
 
 @app.route("/raw/search", methods=["GET"])
@@ -99,7 +108,7 @@ def station(station_id):
 
     cursor = get_db().cursor()
     local_station_data = cursor.execute(
-        "SELECT postcode, city, name FROM stations WHERE id = ?;", (station_id,)
+        "SELECT postcode, city, name, lat, lng FROM stations WHERE id = ?;", (station_id,)
     ).fetchone()
     if not local_station_data:
         return redirect(url_for("index"))

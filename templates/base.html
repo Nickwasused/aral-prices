@@ -11,6 +11,11 @@
     <link rel="manifest" href="{{ url_for('static', filename='images/site.webmanifest') }}" />
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
     {% block head %}{% endblock %}
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
 </head>
 <body>
 </nav>

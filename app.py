@@ -65,7 +65,7 @@ def display_map():
     lat = request.args.get("lat", default=51, type=float)
     lng = request.args.get("lng", default=11, type=float)
     zoom = request.args.get("zoom", default=6, type=int)
-    disable_control = request.args.get("disable_control", default=True, type=is_it_true)
+    disable_control = request.args.get("disable_control", default=False, type=is_it_true)
     cursor = get_db().cursor()
 
     tmp_stations = cursor.execute(

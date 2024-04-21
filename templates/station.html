@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-
 {% block head %}
 <style>
 @media (max-width: 1400px) {
@@ -12,18 +11,17 @@
 }
 </style>
 {% endblock %}
-
 {% block body %}
 <div class="container mx-auto text-center">
-    <div class="border border-1 m-1 mb-5 text-4xl">
+    <div class="border border-1 m-2 mb-5 text-4xl p-2 dark:text-white">
         <h1>{{ local_station_data[0] }} {{ local_station_data[1] }}</h1>
         <h2>{{ local_station_data[2] }}</h2>
     </div>
-    <table class="w-full table table-borderless">
+    <table class="w-full table table-borderless dark:text-white">
         <tr>
             <td class="info">
                 <table class="table">
-                    <thead class="border-b border-black">
+                    <thead class="border-b border-black dark:border-white">
                         <tr>
                             <td style="width:7.5%">Icon</td><td>Kraftstoff</td><td>Preis</td><td>letzte Preisänderung</td>
                         </tr>

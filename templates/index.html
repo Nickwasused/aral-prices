@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<h1 class="border text-center">Tankstellen: {{ station_count }}</h1>
-<div class="container">
-    <input type="text" class="w-100" placeholder="Stadt, Postleitzahl, Name" name="search" id="search" required
+<h1 class="border text-center text-5xl p-4">Tankstellen: {{ station_count }}</h1>
+<div class="container mx-auto px-4 w-3/4">
+    <input type="text" class="w-5/6 border p-4 mt-4" placeholder="Stadt, Postleitzahl, Name" name="search" id="search" required
            hx-trigger="keyup changed delay:500ms" hx-target="#results" hx-swap="innerHTML" hx-get="{{ url_for('search') }}">
-    <a href="/map"><img class="w-25" src="{{ url_for('static', filename='images/map.svg') }}"></a>
+    <a href="/map"><img class="inline w-1/12" src="{{ url_for('static', filename='images/map.svg') }}"></a>
 </div>
-<div class="container pt-3">
-    <table class="table table-hover">
+<div class="container pt-3 mx-auto w-3/4">
+    <table class="w-full table-auto">
         <tbody id="results"></tbody>
     </table>
 </div>

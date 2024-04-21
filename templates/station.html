@@ -14,16 +14,16 @@
 {% endblock %}
 
 {% block body %}
-<div class="container text-center">
-    <div class="border border-1 m-1 mb-5">
+<div class="container mx-auto text-center">
+    <div class="border border-1 m-1 mb-5 text-4xl">
         <h1>{{ local_station_data[0] }} {{ local_station_data[1] }}</h1>
         <h2>{{ local_station_data[2] }}</h2>
     </div>
-    <table class="table table-borderless">
+    <table class="w-full table table-borderless">
         <tr>
             <td class="info">
                 <table class="table">
-                    <thead>
+                    <thead class="border-b border-black">
                         <tr>
                             <td style="width:7.5%">Icon</td><td>Kraftstoff</td><td>Preis</td><td>letzte Preisänderung</td>
                         </tr>
@@ -31,7 +31,7 @@
                     <tbody>
 
                         {% for data in station_data.data %}
-                            <tr>
+                            <tr class="border-b border-slate-200">
                                 <th scope="row"><img class="img-fluid" src="https://external-content.duckduckgo.com/iu/?u=https://api.tankstelle.aral.de{{ data.icon }}"></th>
                                 <td>{{ data.name }}</td>
                                 <td>{% if not data.price.error %}{{ data.price.price | euro }}{% else %}Kein Preis verfügbar{% endif %}</td>
@@ -47,6 +47,6 @@
             </td>
         </tr>
     </table>
-    <a href="{{ url_for('index') }}"><button type="button" class="btn btn-secondary mb-5">zurück</button></a>
+    <a href="{{ url_for('index') }}"><button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 mt-4">zurück</button></a>
 </div>
 {% endblock %}

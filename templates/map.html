@@ -24,15 +24,8 @@
         attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
     }).addTo(map);
 
-    {% if not disable_control %}
-    L.control.scale({imperial: true, metric: true}).addTo(map);
-    {% else %}
-    map.dragging.disable();
-    map.touchZoom.disable();
-    map.doubleClickZoom.disable();
-    map.scrollWheelZoom.disable();
-    map.boxZoom.disable();
-    map.keyboard.disable();
+    {% if not disable_control %}L.control.scale({imperial: true, metric: true}).addTo(map);{% else %}
+    map.dragging.disable(), map.touchZoom.disable(), map.doubleClickZoom.disable(), map.scrollWheelZoom.disable(), map.boxZoom.disable(), map.keyboard.disable();
     if (map.tap) map.tap.disable();
     document.getElementById('map').style.cursor='default';
     {% endif %}
@@ -53,9 +46,7 @@
 
     {% for station in tmp_stations %}
     var tmp_marker = L.marker([{{station[2]}}, {{station[3]}}], { icon: station_icon, name: "{{ station[0] }}" }).on('click', markerOnClick);
-    {% if not disable_control %}
-    tmp_marker.bindTooltip("{{ station[1] }}<br/>{{ station[4] }} {{ station[5] }}<br/>").openTooltip();
-    {% endif %}
+    {% if not disable_control %}tmp_marker.bindTooltip("{{ station[1] }}<br/>{{ station[4] }} {{ station[5] }}<br/>").openTooltip();{% endif %}
     markers.addLayer(tmp_marker);
     {% endfor %}
 

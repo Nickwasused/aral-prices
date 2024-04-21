@@ -66,12 +66,20 @@ def display_map():
     lng = request.args.get("lng", default=11, type=float)
     zoom = request.args.get("zoom", default=6, type=int)
     disable_control = request.args.get("disable_control", default=False, type=is_it_true)
+    tmp_station_id = request.args.get("station", type=int)
     cursor = get_db().cursor()
 
-    tmp_stations = cursor.execute(
-        "SELECT * FROM stations;"
-    ).fetchall()
-    bounds = cursor.execute("SELECT MIN(lat)-1, MIN(lng)-1, MAX(lat)+1, MAX(lng)+1 FROM stations;").fetchone()
+    if tmp_station_id:
+        tmp_stations = cursor.execute(
+            "SELECT * FROM stations WHERE id = ?;", (tmp_station_id,)
+        ).fetchall()
+        bounds = cursor.execute("SELECT MIN(lat)-1, MIN(lng)-1, MAX(lat)+1, MAX(lng)+1 FROM stations WHERE id = ?;",
+                                (tmp_station_id,)).fetchone()
+    else:
+        tmp_stations = cursor.execute(
+            "SELECT * FROM stations;"
+        ).fetchall()
+        bounds = cursor.execute("SELECT MIN(lat)-1, MIN(lng)-1, MAX(lat)+1, MAX(lng)+1 FROM stations;").fetchone()
     return render_template("map.html", tmp_stations=tmp_stations, bounds=bounds, lat=lat, lng=lng,
                            zoom=zoom, disable_control=disable_control)
 
@@ -118,7 +126,7 @@ def station(station_id):
     ).json()
 
     return render_template(
-        "station.html", local_station_data=local_station_data, station_data=station_data
+        "station.html", local_station_data=local_station_data, station_data=station_data, station_id=station_id
     )
 
 

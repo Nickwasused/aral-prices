@@ -5,6 +5,7 @@
 <div class="container">
     <input type="text" class="w-100" placeholder="Stadt, Postleitzahl, Name" name="search" id="search" required
            hx-trigger="keyup changed delay:500ms" hx-target="#results" hx-swap="innerHTML" hx-get="{{ url_for('search') }}">
+    <a href="/map"><img class="w-25" src="{{ url_for('static', filename='images/map.svg') }}"></a>
 </div>
 <div class="container pt-3">
     <table class="table table-hover">

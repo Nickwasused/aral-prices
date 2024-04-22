@@ -31,13 +31,20 @@ These instructions will get you a copy of the project up and running on your loc
 What things you need to install the software and how to install them.
 
 ``python3`` is required.
+``tailwindcss`` [is required](https://tailwindcss.com/blog/standalone-cli)
 
 ### Installing
 
 Install the required packages by running:
 
-```
+```commandline
 pip install -r requirements.txt
+```
+
+Regenerate the ``main.css`` file by running:
+
+```commandline
+tailwindcss -i ./static/css/base.css -o ./static/css/main.css --watch
 ```
 
 ## 🎈 Usage <a name="usage"></a>
@@ -52,6 +59,7 @@ The code is formatted and checked with [ruff](https://github.com/astral-sh/ruff)
 ## ⛏️ Built Using <a name = "built_using"></a>
 - [Flask](https://flask.palletsprojects.com) - Web Framework
 - [Station-Data](https://github.com/bp-stations/station-data/) - Gas station data
+- [tailwindcss](https://tailwindcss.com/) - CSS framework
 
 ## Affiliation <a name = "affiliation"></a>
 I am not affiliated with the Aral Aktiengesellschaft nor the BP p.l.c.

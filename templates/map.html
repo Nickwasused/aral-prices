@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<link href="{{ url_for('static', filename='css/leaflet.css') }}" rel="stylesheet">
-<link href="{{ url_for('static', filename='css/cluster.css') }}" rel="stylesheet">
+<link href="{{ url_for('static', filename='css/leaflet.css') }}" rel="stylesheet" media="print" onload="this.media='all'">
+<link href="{{ url_for('static', filename='css/cluster.css') }}" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript>
+    <link href="{{ url_for('static', filename='css/leaflet.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/cluster.css') }}" rel="stylesheet">
+</noscript>
 <script src="{{ url_for('static', filename='js/leaflet.js') }}"></script>
 <script src="{{ url_for('static', filename='js/pixi.js') }}"></script>
 <script src="{{ url_for('static', filename='js/markercluster.js') }}"></script>

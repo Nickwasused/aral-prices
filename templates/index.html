@@ -1,4 +1,7 @@
 {% extends 'base.html' %}
+{% block head %}
+<script src="{{ url_for('static', filename='js/htmx.js') }}" defer></script>
+{% endblock %}
 {% block body %}
 <div class="container mx-auto px-4">
     <h1 class="border text-center m-2 mb-5 text-5xl p-2 dark:text-white dark:border-white">Tankstellen: {{ station_count }}</h1>

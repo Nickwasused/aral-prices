@@ -133,9 +133,13 @@ def station(station_id):
     if not local_station_data:
         return redirect(url_for("index"))
 
-    station_data = requests.get(
-        f"https://api.tankstelle.aral.de/api/v2/stations/{station_id}/prices"
-    ).json()
+    try:
+        station_data = requests.get(
+            f"https://api.tankstelle.aral.de/api/v2/stations/{station_id}/prices"
+        ).json()
+    except TimeoutError:
+        print("api/we are offline, returning empty data")
+        station_data = []
 
     return render_template(
         "station.html",

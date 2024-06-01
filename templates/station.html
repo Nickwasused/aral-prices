@@ -17,7 +17,7 @@
                     <tbody>
                         {% for data in station_data.data %}
                             <tr class="border-b border-slate-200">
-                                <th scope="row w-200">{% if data.aral_id in icon_data %}<img class="object-cover" src="{{ url_for('static', filename='images/icons/') }}{{ data.aral_id }}.avif">{% else %}{% endif %}</th>
+                                <th scope="row w-200">{% if data.aral_id in icon_data %}<img class="object-cover" alt="Logo für {{ data.name }}" src="{{ url_for('static', filename='images/icons/') }}{{ data.aral_id }}.avif">{% else %}{% endif %}</th>
                                 <td>{{ data.name }}</td>
                                 <td>{% if not data.price.error %}{{ data.price.price | euro }}{% else %}Kein Preis verfügbar{% endif %}</td>
                                 <td>{% if not data.price.error %}{{ data.price.valid_from | strftime }} Uhr{% else %} - {% endif %}</td>
@@ -27,8 +27,8 @@
                 </table>
             </div>
             <div class="hidden lg:block my-10 w-1/4">
-                <iframe id="mapframe" frameborder="0" class="h-full" src="about:blank" data-src="/map?lat={{ local_station_data[3] }}&lng={{ local_station_data[4] }}&zoom=16&disable_control=true&station={{ station_id }}"></iframe>
-                <noscript><iframe frameborder="0" class="h-full" src="/map?lat={{ local_station_data[3] }}&lng={{ local_station_data[4] }}&zoom=16&disable_control=true&station={{ station_id }}"></iframe></noscript>
+                <iframe id="mapframe" title="Karte, auf der, der Standort der Tankstelle {{ local_station_data[0] }}, {{ local_station_data[1] }} gezeigt wird." frameborder="0" class="h-full" src="about:blank" data-src="/map?lat={{ local_station_data[3] }}&lng={{ local_station_data[4] }}&zoom=16&disable_control=true&station={{ station_id }}"></iframe>
+                <noscript><iframe title="Karte, auf der, der Standort der Tankstelle {{ local_station_data[0] }}, {{ local_station_data[1] }} gezeigt wird." frameborder="0" class="h-full" src="/map?lat={{ local_station_data[3] }}&lng={{ local_station_data[4] }}&zoom=16&disable_control=true&station={{ station_id }}"></iframe></noscript>
             </div>
     </div>
     <a href="{{ url_for('index') }}"><button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 mt-4">zurück</button></a>

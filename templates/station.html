@@ -27,9 +27,28 @@
                 </table>
             </div>
             <div class="hidden lg:block my-10 w-1/4">
-                <iframe frameborder="0" class="h-full" src="/map?lat={{ local_station_data[3] }}&lng={{ local_station_data[4] }}&zoom=16&disable_control=true&station={{ station_id }}"></iframe>
+                <iframe id="mapframe" frameborder="0" class="h-full" src="about:blank" data-src="/map?lat={{ local_station_data[3] }}&lng={{ local_station_data[4] }}&zoom=16&disable_control=true&station={{ station_id }}"></iframe>
+                <noscript><iframe frameborder="0" class="h-full" src="/map?lat={{ local_station_data[3] }}&lng={{ local_station_data[4] }}&zoom=16&disable_control=true&station={{ station_id }}"></iframe></noscript>
             </div>
     </div>
     <a href="{{ url_for('index') }}"><button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 mt-4">zurück</button></a>
 </div>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const frame = document.getElementById("mapframe");
+
+    if ("IntersectionObserver" in window) {
+        let lazy_frame_observer = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    let lazyFrame = entry.target;
+                    lazyFrame.src = lazyFrame.dataset.src;
+                    lazy_frame_observer.unobserve(lazyFrame);
+                }
+            })
+        });
+        lazy_frame_observer.observe(frame);
+    }
+});
+</script>
 {% endblock %}

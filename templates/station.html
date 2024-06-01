@@ -1,25 +1,13 @@
 {% extends 'base.html' %}
-{% block head %}
-<style>
-@media (max-width: 1400px) {
-    .map {
-        visibility: hidden;
-    }
-    .info {
-        width: 100%;
-    }
-}
-</style>
-{% endblock %}
 {% block body %}
 <div class="container mx-auto text-center">
     <div class="border border-1 m-2 mb-5 text-4xl p-2 dark:text-white">
         <h1>{{ local_station_data[0] }} {{ local_station_data[1] }}</h1>
         <h2>{{ local_station_data[2] }}</h2>
     </div>
-    <table class="w-full table table-borderless dark:text-white">
-        <tr>
-            <td class="info">
+
+    <div class="flex w-full dark:text-white">
+            <div class="info w-full lg:w-3/4">
                 <table class="table">
                     <thead class="border-b border-black dark:border-white">
                         <tr>
@@ -27,24 +15,21 @@
                         </tr>
                     </thead>
                     <tbody>
-
                         {% for data in station_data.data %}
                             <tr class="border-b border-slate-200">
-                                <th scope="row">{% if data.aral_id in icon_data %}<img class="img-fluid" src="{{ url_for('static', filename='images/icons/') }}{{ data.aral_id }}.avif">{% else %}<img class="img-fluid" src="https://external-content.duckduckgo.com/iu/?u=https://api.tankstelle.aral.de/{{ data.icon }}">{% endif %}</th>
+                                <th scope="row w-200">{% if data.aral_id in icon_data %}<img class="object-cover" src="{{ url_for('static', filename='images/icons/') }}{{ data.aral_id }}.avif">{% else %}{% endif %}</th>
                                 <td>{{ data.name }}</td>
                                 <td>{% if not data.price.error %}{{ data.price.price | euro }}{% else %}Kein Preis verfügbar{% endif %}</td>
                                 <td>{% if not data.price.error %}{{ data.price.valid_from | strftime }} Uhr{% else %} - {% endif %}</td>
                             </tr>
                         {% endfor %}
-
                     </tbody>
                 </table>
-            </td>
-            <td height="100" class="map">
-                <iframe style="width: 100%; height: 500%; padding-top: 30%;" frameborder="0" src="/map?lat={{ local_station_data[3] }}&lng={{ local_station_data[4] }}&zoom=16&disable_control=true&station={{ station_id }}"></iframe>
-            </td>
-        </tr>
-    </table>
+            </div>
+            <div class="hidden lg:block my-10 w-1/4">
+                <iframe frameborder="0" class="h-full" src="/map?lat={{ local_station_data[3] }}&lng={{ local_station_data[4] }}&zoom=16&disable_control=true&station={{ station_id }}"></iframe>
+            </div>
+    </div>
     <a href="{{ url_for('index') }}"><button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 mt-4">zurück</button></a>
 </div>
 {% endblock %}

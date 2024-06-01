@@ -1,12 +1,18 @@
 #!/usr/bin/env python3
 from flask import Flask, render_template, request, redirect, url_for, g, send_file
 from datetime import datetime, timezone
+from os.path import isfile, join
 from dotenv import load_dotenv
+from pathlib import Path
+from os import listdir
 import requests
 import sqlite3
 
 load_dotenv()
 app = Flask(__name__)
+script_path = Path(__file__).parent.absolute()
+icon_folder = script_path.joinpath("./static/images/icons")
+icon_data = [f.replace(".avif", "") for f in listdir(icon_folder) if isfile(join(icon_folder, f))]
 
 
 def get_db():
@@ -146,6 +152,7 @@ def station(station_id):
         local_station_data=local_station_data,
         station_data=station_data,
         station_id=station_id,
+        icon_data=icon_data,
     )
 
 

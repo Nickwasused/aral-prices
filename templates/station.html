@@ -30,7 +30,7 @@
 
                         {% for data in station_data.data %}
                             <tr class="border-b border-slate-200">
-                                <th scope="row"><img class="img-fluid" src="https://external-content.duckduckgo.com/iu/?u=https://api.tankstelle.aral.de{{ data.icon }}"></th>
+                                <th scope="row">{% if data.aral_id in icon_data %}<img class="img-fluid" src="{{ url_for('static', filename='images/icons/') }}{{ data.aral_id }}.avif">{% else %}<img class="img-fluid" src="https://external-content.duckduckgo.com/iu/?u=https://api.tankstelle.aral.de/{{ data.icon }}">{% endif %}</th>
                                 <td>{{ data.name }}</td>
                                 <td>{% if not data.price.error %}{{ data.price.price | euro }}{% else %}Kein Preis verfügbar{% endif %}</td>
                                 <td>{% if not data.price.error %}{{ data.price.valid_from | strftime }} Uhr{% else %} - {% endif %}</td>

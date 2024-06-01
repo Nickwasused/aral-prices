@@ -44,7 +44,7 @@ pip install -r requirements.txt
 Regenerate the ``main.css`` file by running:
 
 ```commandline
-tailwindcss -i ./static/css/base.css -o ./static/css/main.css --watch
+tailwindcss -i ./static/css/base.css -o ./static/css/main.css --watch -m
 ```
 
 ## 🎈 Usage <a name="usage"></a>

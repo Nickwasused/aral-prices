@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, g, send_fi
 from datetime import datetime, timezone
 from os.path import isfile, join
 from dotenv import load_dotenv
+from functools import cache
 from pathlib import Path
 from os import listdir
 import requests
@@ -13,6 +14,18 @@ app = Flask(__name__)
 script_path = Path(__file__).parent.absolute()
 icon_folder = script_path.joinpath("./static/images/icons")
 icon_data = [f.replace(".avif", "") for f in listdir(icon_folder) if isfile(join(icon_folder, f))]
+
+
+def get_station_count() -> int:
+    tmp_db = sqlite3.connect("./data/aral.db")
+    tmp_cursor = tmp_db.cursor()
+    tmp_station_count = tmp_cursor.execute("SELECT COUNT(*) FROM stations;").fetchone()[0]
+    tmp_cursor.close()
+    tmp_db.close()
+    return tmp_station_count
+
+
+station_count = get_station_count()
 
 
 def get_db():
@@ -57,8 +70,6 @@ def robots():
 
 @app.route("/", methods=["GET"])
 def index():
-    cursor = get_db().cursor()
-    station_count = cursor.execute("SELECT COUNT(*) FROM stations;").fetchone()[0]
     return render_template("index.html", station_count=station_count)
 
 

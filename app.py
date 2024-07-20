@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, g, send_fi
 from datetime import datetime, timezone
 from os.path import isfile, join
 from dotenv import load_dotenv
-from functools import cache
+from flask_caching import Cache
 from pathlib import Path
 from os import listdir
 import requests
@@ -11,6 +11,7 @@ import sqlite3
 
 load_dotenv()
 app = Flask(__name__)
+cache = Cache(app)
 script_path = Path(__file__).parent.absolute()
 icon_folder = script_path.joinpath("./static/images/icons")
 icon_data = [f.replace(".avif", "") for f in listdir(icon_folder) if isfile(join(icon_folder, f))]
@@ -60,15 +61,16 @@ def _jinja2_filter_datetime(date):
 
 @app.route("/sitemap.xml", methods=["GET"])
 def sitemap():
-    return send_file("./data/sitemap.xml")
+    return send_file("./data/sitemap.xml", max_age=43200)
 
 
 @app.route("/robots.txt", methods=["GET"])
 def robots():
-    return send_file("./static/robots.txt")
+    return send_file("./static/robots.txt", max_age=86400)
 
 
 @app.route("/", methods=["GET"])
+@cache.cached(timeout=300)
 def index():
     return render_template("index.html", station_count=station_count)
 
@@ -77,7 +79,12 @@ def is_it_true(value):
     return value.lower() == "true"
 
 
+def map_cache_key():
+    return ",".join([f"{key}={value}" for key, value in request.args.items()])
+
+
 @app.route("/map", methods=["GET"])
+@cache.cached(timeout=300, make_cache_key=map_cache_key)
 def display_map():
     lat = request.args.get("lat", default=51, type=float)
     lng = request.args.get("lng", default=11, type=float)
@@ -113,6 +120,7 @@ def display_map():
 
 
 @app.route("/raw/search", methods=["GET"])
+@cache.cached(timeout=300, make_cache_key=map_cache_key)
 def search():
     search_term = request.args.get("search")
 
@@ -138,6 +146,7 @@ def search():
 
 
 @app.route("/station/<int:station_id>", methods=["GET"])
+@cache.cached(timeout=300)
 def station(station_id):
     if not station_id:
         return redirect(url_for("index"))

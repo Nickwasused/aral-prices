@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
-from flask import Flask, render_template, request, redirect, url_for, g, send_file
+from flask import Flask, render_template, request, redirect, url_for, g, send_file, Response
 from datetime import datetime, timezone
 from os.path import isfile, join
 from dotenv import load_dotenv
-from flask_caching import Cache
 from pathlib import Path
 from os import listdir
 import requests
 import sqlite3
+import hashlib
 
 load_dotenv()
 app = Flask(__name__)
-cache = Cache(app)
 script_path = Path(__file__).parent.absolute()
-icon_folder = script_path.joinpath("./static/images/icons")
+static_folder = script_path.joinpath("./static/")
+icon_folder = static_folder.joinpath("./images/icons")
 icon_data = [f.replace(".avif", "") for f in listdir(icon_folder) if isfile(join(icon_folder, f))]
 
 
@@ -61,16 +61,15 @@ def _jinja2_filter_datetime(date):
 
 @app.route("/sitemap.xml", methods=["GET"])
 def sitemap():
-    return send_file("./data/sitemap.xml", max_age=43200)
+    return send_file("./data/sitemap.xml", max_age=43200, etag=True)
 
 
 @app.route("/robots.txt", methods=["GET"])
 def robots():
-    return send_file("./static/robots.txt", max_age=86400)
+    return send_file("./static/robots.txt", max_age=86400, etag=True)
 
 
 @app.route("/", methods=["GET"])
-@cache.cached(timeout=300)
 def index():
     return render_template("index.html", station_count=station_count)
 
@@ -79,12 +78,7 @@ def is_it_true(value):
     return value.lower() == "true"
 
 
-def map_cache_key():
-    return ",".join([f"{key}={value}" for key, value in request.args.items()])
-
-
 @app.route("/map", methods=["GET"])
-@cache.cached(timeout=300, make_cache_key=map_cache_key)
 def display_map():
     lat = request.args.get("lat", default=51, type=float)
     lng = request.args.get("lng", default=11, type=float)
@@ -108,7 +102,8 @@ def display_map():
         bounds = cursor.execute(
             "SELECT MIN(lat)-1, MIN(lng)-1, MAX(lat)+1, MAX(lng)+1 FROM stations;"
         ).fetchone()
-    return render_template(
+
+    tmp_response = Response(response=render_template(
         "map.html",
         tmp_stations=tmp_stations,
         bounds=bounds,
@@ -116,11 +111,13 @@ def display_map():
         lng=lng,
         zoom=zoom,
         disable_control=disable_control,
-    )
+    ))
+    tmp_response.set_etag(hashlib.sha1(f"{lat}{lng}{zoom}{disable_control}{tmp_station_id}".encode("utf-8")).hexdigest())
+
+    return tmp_response
 
 
 @app.route("/raw/search", methods=["GET"])
-@cache.cached(timeout=300, make_cache_key=map_cache_key)
 def search():
     search_term = request.args.get("search")
 
@@ -142,11 +139,13 @@ def search():
         ),
     ).fetchall()
 
-    return render_template("raw_search.html", stations=return_stations)
+    tmp_response = Response(response=render_template("raw_search.html", stations=return_stations))
+    tmp_response.set_etag(hashlib.sha1(f"{search_term}".encode("utf-8")).hexdigest())
+
+    return tmp_response
 
 
 @app.route("/station/<int:station_id>", methods=["GET"])
-@cache.cached(timeout=300)
 def station(station_id):
     if not station_id:
         return redirect(url_for("index"))
@@ -167,13 +166,19 @@ def station(station_id):
         print("api/we are offline, returning empty data")
         station_data = []
 
-    return render_template(
+    tmp_response = Response(response=render_template(
         "station.html",
         local_station_data=local_station_data,
         station_data=station_data,
         station_id=station_id,
         icon_data=icon_data,
-    )
+    ))
+
+    local_e_tag = "".join(map(str, local_station_data))
+    station_e_tag = "".join(map(str, station_data))
+    tmp_response.set_etag(hashlib.sha1(f"{local_e_tag}{station_e_tag}{station_id}".encode("utf-8")).hexdigest())
+
+    return tmp_response
 
 
 if __name__ == "__main__":
